@@ -7,7 +7,7 @@ const getUserById = (userId) => {
     });
 };
 
-const addUser = (email, pasword, username) => {
+const addUser = (email, password, username) => {
   return db.query('INSERT INTO users (email, password, username) VALUES ($1, $2, $3) RETURNING *;', [email, password, username])
   .then(data => {
     return data.rows[0];
