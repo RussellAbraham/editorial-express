@@ -21,7 +21,15 @@ router.post('/', async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, testIfUserExists.password);
     if (passwordMatch) {
       console.log('Login success');
-      res.redirect('/');
+      const user = await getUserByUserName(username);
+      if(user) {
+        const userId = user.id;
+        res.cookie('user_id', userId);
+        res.redirect('/');
+      } else {
+        console.error('Not found');
+        res.status(500).send('Error');
+      }
     } else {
       console.error('No match');
       res.status(401).send('No match');

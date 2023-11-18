@@ -1,7 +1,9 @@
 const express = require('express');
+
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
-const { addUser, getUserByUserName } = require('../db/queries/users');
+const { addUser, getUserById, getUserByUserName } = require('../db/queries/users');
+
 const router  = express.Router();
 
 router.get('/', (req, res) => {
@@ -22,7 +24,15 @@ router.post('/', async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     await addUser(email, hashedPassword, username);
-    res.redirect('/login');
+    const user = await getUserByUserName(username);
+    if(user) {
+      const userId = user.id;
+      res.cookie('user_id', userId);
+      res.redirect('/login');
+    } else {
+      console.error('Not found');
+      res.status(500).send('Error');
+    }
   } catch(err){
     console.error('Error');
     return res.status(500).send('Error')
