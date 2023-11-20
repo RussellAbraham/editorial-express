@@ -10,8 +10,7 @@ router.get('/', async (req, res) => {
   //get user_id cookie that is set during registration/log in
   const cookie = req.cookies['user_id'];
 
-  //currently hard code to user id 1
-  const notes = await getNotes(1)
+  const notes = await getNotes(cookie)
 
   // to test what are the notes output
   //console.log(notes)
