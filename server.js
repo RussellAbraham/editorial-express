@@ -23,15 +23,20 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
+// Use cookie-parser middleware
+app.use(cookieParser());
+
 // Separated Routes for each Resource
 const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 const registerRoutes = require('./routes/register');
+const notesRoutes = require('./routes/notes');
 
 // Mount all resource routes
 app.use('/login', loginRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/register', registerRoutes);
+app.use('/notes', notesRoutes);
 
 // Home page
 app.get('/', (req, res) => {
