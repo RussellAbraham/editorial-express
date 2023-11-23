@@ -1,9 +1,9 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const db = require("../db/connection");
-const { getUserById } = require("../db/queries/users");
-const { getNotes } = require("../db/queries/notes");
-const router = express.Router();
+const express = require('express');
+const bcrypt = require('bcrypt');
+const db = require('../db/connection');
+const { getUserById, getNoteById } = require('../db/queries/users');
+const { getNotes } = require('../db/queries/notes');
+const router  = express.Router();
 
 router.get("/", async (req, res) => {
   res.locals.title = "Notes";
@@ -20,5 +20,16 @@ router.get("/", async (req, res) => {
   };
   res.render("notes", templateVars);
 });
+
+router.get('/:id', async (req, res) => {
+  const note = await getNoteById(req.params.id)
+  res.locals.title = note.title
+  const templateVars = {
+    note
+  }
+  res.render('editor', templateVars)
+});
+
+
 
 module.exports = router;
