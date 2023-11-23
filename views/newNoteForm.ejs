@@ -1,0 +1,30 @@
+<!-- newNote.ejs -->
+<%- include('partials/_header') %>
+
+<header class="navbar border-dark border-bottom p-1">
+  <nav class="btn-group">
+    <a class="btn btn-sm" href="/">Home</a>
+  </nav>
+  <nav class="btn-group">
+    <a class="btn btn-sm" href="/logout">Logout</a>
+  </nav>
+</header>
+
+<!-- Form for creating a new note -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form action="/notes/new" method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+          <label for="body" class="form-label">Body</label>
+          <textarea class="form-control" id="body" name="body" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Note</button>
+      </form>
+    </div>
+  </div>
+</div>

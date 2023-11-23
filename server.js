@@ -6,6 +6,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -25,6 +26,10 @@ app.use(express.static('public'));
 
 // Use cookie-parser middleware
 app.use(cookieParser());
+
+// Add middleware to parse JSON
+app.use(bodyParser.json());
+
 
 // Separated Routes for each Resource
 const loginRoutes = require('./routes/login');

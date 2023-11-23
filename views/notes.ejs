@@ -15,23 +15,31 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <ol class="list-group list-group-numbered">
-          <% for (const note of notes) { %>
+          <% for (const note of userNote) { %>
             <li class="list-group-item d-flex justify-content-between align-items-start">
               <div class="ms-2 me-auto">
                 <div class="fw-bold">
                   <%= note.title %>
                 </div>
-                <%= note.body %>
-                  <!-- Add more details as needed -->
+
+                <!-- Display "Last edited" and note.updated_at -->
+                <div class="text-muted">Last edited: <%= note.updated_at.toISOString().split('T')[0] %>
+                </div>
               </div>
-              <span class="badge bg-primary rounded-pill">
-                <%= note.created_at.toISOString().split('T')[0] %>
-              </span>
+
+              <!-- Replace the creation date with a button for reading and deleting -->
+              <div class="d-flex align-items-center">
+                <a href="/notes/read/<%= note.id %>" class="btn btn-primary me-2">Read</a>
+                <form action="/notes/delete/<%= note.id %>" method="POST">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
             </li>
             <% } %>
         </ol>
       </div>
     </div>
   </div>
+
 
   <%- include('partials/_footer') %>
