@@ -39,7 +39,7 @@ const getNoteById = (noteId) => {
   });
 }
 
-const deleteNote = (noteId) => {
+const deleteNoteById = (noteId) => {
   return db.query('DELETE FROM notes WHERE id = $1;', [noteId],)
   .then(() => {
     console.log('note deleted successfully');
@@ -49,4 +49,4 @@ const deleteNote = (noteId) => {
   });
 }
 
-module.exports = { getNoteById, getNotes, addNewNote, deleteNote }
+module.exports = { getNoteById, getNotes, addNewNote, deleteNoteById }

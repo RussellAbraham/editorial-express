@@ -1,7 +1,7 @@
 const db = require('../connection')
 
 const getUserById = (userId) => {
-  return db.query('SELECT * FROM users WHERE user_id = $1;', [userId])
+  return db.query('SELECT * FROM users WHERE id = $1;', [userId])
     .then(data => {
       return data.rows[0]; // Since we're fetching a single user, we return the first row
     });
@@ -21,11 +21,4 @@ const addUser = (email, password, username) => {
   });
 };
 
-const getNoteById = (noteId) => {
-  return db.query('SELECT * FROM users WHERE id = $1;', [noteId])
-  .then(data => {
-    return data.rows[0]; // Since we're fetching a single user, we return the first row
-  });
-}
-
-module.exports = { getUserById, getUserByUserName, addUser, getNoteById };
+module.exports = { getUserById, getUserByUserName, addUser };
