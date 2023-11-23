@@ -24,13 +24,29 @@ const getNotes = (userId) => {
   .then(data => {
     return data.rows;
   })
+  .catch((error) => {
+    console.log("error :", error.message);
+  });
 }
 
 const getNoteById = (noteId) => {
   return db.query('SELECT * FROM notes WHERE id = $1;', [noteId])
   .then(data => {
     return data.rows[0]
+  })
+  .catch((error) => {
+    console.log("error :", error.message);
   });
 }
 
-module.exports = { getNoteById, getNotes, addNewNote }
+const deleteNoteById = (noteId) => {
+  return db.query('DELETE FROM notes WHERE id = $1;', [noteId],)
+  .then(() => {
+    console.log('note deleted successfully');
+  })
+  .catch((error) => {
+    console.log("error :", error.message);
+  });
+}
+
+module.exports = { getNoteById, getNotes, addNewNote, deleteNoteById }
