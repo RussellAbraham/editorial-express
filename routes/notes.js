@@ -51,12 +51,12 @@ router.get('/new', (req, res) => {
 
 // Route for handling the form submission
 router.post('/new', async (req, res) => {
-  const { title, body } = req.body;
+  const { title } = req.body;
   const userId = req.cookies['user_id'];
 
   try {
     // Call a function to create a new note in the database
-    await createNote(userId, title, body);
+    await createNote(userId, title, '');
 
     // Redirect the user to the notes page or any other page you prefer
     res.redirect('/notes');
@@ -80,7 +80,7 @@ router.get('/read/:id', async (req, res) => {
 // POST route to handle the update
 router.post('/updateNote', async (req, res) => {
   console.log("Updating notes");
-  
+
   try {
     const { noteId, updatedBody } = req.body;
     console.log("noteId:", noteId);

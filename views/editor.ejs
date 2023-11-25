@@ -2,70 +2,71 @@
 
   <header class="navbar border-dark border-bottom p-1">
     <nav class="btn-group">
-      <a class="btn btn-sm" href="/">Home</a>
-    </nav>
+
+      <a href="/notes" class="btn btn-sm pl-1 pr-1">&#9776;</a>
+
+      <div class="dropdown">
+          <button class="btn btn-sm dropdown-toggle" type="button" id="fileDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              File
+          </button>
+          <div class="dropdown-menu" aria-labelledby="fileDropDown" tabindex="0">
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNoteModal">New</a>
+              <div class="dropdown-divider"></div>
+              <label for="inputFile" class="dropdown-item">Open</label>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item">Load</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item">Save</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item">Exit</a>
+          </div>
+      </div>
+      <div class="dropdown">
+          <button class="btn btn-sm dropdown-toggle" type="button" id="editDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Edit
+          </button>
+          <div class="dropdown-menu" aria-labelledby="editDropDown">
+              <button class="dropdown-item" onclick="execCmd('selectAll')">Select All</button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" onclick="execCmd('undo');">Undo</button>
+              <button class="dropdown-item" onclick="execCmd('redo');">Redo</button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" onclick="execCmd('cut');">Cut</button>
+              <button class="dropdown-item" onclick="execCmd('copy');">Copy</button>
+          </div>
+      </div>
+      <div class="dropdown">
+          <button class="btn btn-sm dropdown-toggle" type="button" id="viewDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              View
+          </button>
+          <div class="dropdown-menu" aria-labelledby="viewDropDown">
+              <button class="dropdown-item" onclick="toggleSource();">View Source</button>
+              <button class="dropdown-item" onclick="toggleEdit();">Toggle Edit</button>
+              <button class="dropdown-item" onclick="toggleFormat();">Toggle Format</button>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" data-toggle="modal" data-target="#modalScroll">Settings</a>
+              <a class="dropdown-item" data-toggle="modal" data-target="#modalTab">Options..</a>
+          </div>
+      </div>
+  </nav>
+  <nav class="btn-group"></nav>
     <nav class="btn-group">
       <a class="btn btn-sm" href="/logout">Logout</a>
     </nav>
   </header>
 
   <main class="container mt-4">
-    <!-- Include CKEditor script -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <script>
-      let editor;
-      document.addEventListener('DOMContentLoaded', (event) => {
-        ClassicEditor
-          .create(document.querySelector('#editor'), {
-            allowedContent: true, // This allows all HTML content
-            // Add any additional configuration options here
-          })
-          .then(newEditor => {
-            editor = newEditor;
-            console.log(editor);
 
-            $('#saveButton').on('click', () => {
-              const updatedBody = editor.getData();
-
-              // Extract noteId from the current URL
-              const noteId = window.location.pathname.split('/').pop();
-
-              // Send the updatedBody to the server for database update
-              $.ajax({
-                url: '/notes/updateNote',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                  noteId: noteId, // replace with the actual note ID
-                  updatedBody: updatedBody,
-                }),
-                success: function (data) {
-                  console.log('Success:', data);
-                  // Handle success, e.g., show a success message
-                },
-                error: function (error) {
-                  console.error('Error:', error);
-                  // Handle error, e.g., show an error message
-                },
-              });
-            });
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      });
-    </script>
-
-    <div id="editor">
-      <!-- Use <%- %> to render HTML unescaped -->
-      <%- note.body %>
-    </div>
+        <!-- Use <%- %> to render HTML unescaped -->
+        <div id="editor" class="form-control">
+          <%- note.body %>
+        </div>
 
 
     <!-- Save button -->
-    <button id="saveButton" class="btn btn-primary">Save</button>
+    <button id="saveButton" class="btn btn-primary mt-3">Save</button>
+
   </main>
 
   <%- include('partials/_footer') %>
