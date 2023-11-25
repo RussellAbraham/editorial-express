@@ -46,8 +46,14 @@ app.use('/notes', notesRoutes);
 // Home page
 app.get('/', (req, res) => {
   res.locals.title = 'Editorial Express';
-  res.render('index')
 
+  const userId  = req.cookies["user_id"];
+
+  if (!userId) {
+    return res.render('index');
+  } else {
+    res.redirect("/notes");
+  }
 });
 
 app.listen(PORT, () => {

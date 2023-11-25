@@ -7,7 +7,14 @@ const router = express.Router();
 router.get("/", (req, res) => {
   // template variable for the document title
   res.locals.title = "Login";
-  res.render("login");
+
+  const userId  = req.cookies["user_id"];
+
+  if (!userId) {
+    return res.render('login');
+  } else {
+    res.redirect("/notes");
+  }
 });
 
 router.post("/", async (req, res) => {
