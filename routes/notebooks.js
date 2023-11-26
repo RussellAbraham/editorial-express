@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
-const { getNotebooks, createNewNotebook } = require('../db/queries/notebooks');
+const { createNewNotebook } = require('../db/queries/notebooks');
 const router = express.Router();
 
 // ---------- Functions for Notebooks -----------------
