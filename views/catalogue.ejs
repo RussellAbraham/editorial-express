@@ -1,29 +1,91 @@
+<!-- notes.ejs -->
 <%- include('partials/_header') %>
 
+  <header class="navbar border-dark border-bottom p-1">
+    <nav class="btn-group">
+
+      <a href="#" class="btn btn-sm pl-1 pr-1">&#9776;</a>
+
+      <div class="dropdown">
+        <button class="btn btn-sm dropdown-toggle" type="button" id="fileDropDown" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          File
+        </button>
+        <div class="dropdown-menu" aria-labelledby="fileDropDown" tabindex="0">
+          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNoteModal">New Note</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNotebookModal">New Notebook</a>
+          <div class="dropdown-divider"></div>
+          <label for="inputFile" class="dropdown-item">Open</label>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">Load</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">Save</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">Exit</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-sm dropdown-toggle" type="button" id="editDropDown" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Edit
+        </button>
+        <div class="dropdown-menu" aria-labelledby="editDropDown">
+          <button class="dropdown-item" onclick="execCmd('selectAll')">Select All</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="execCmd('undo');">Undo</button>
+          <button class="dropdown-item" onclick="execCmd('redo');">Redo</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="execCmd('cut');">Cut</button>
+          <button class="dropdown-item" onclick="execCmd('copy');">Copy</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-sm dropdown-toggle" type="button" id="viewDropDown" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          View
+        </button>
+        <div class="dropdown-menu" aria-labelledby="viewDropDown">
+          <button class="dropdown-item" onclick="toggleSource();">View Source</button>
+          <button class="dropdown-item" onclick="toggleEdit();">Toggle Edit</button>
+          <button class="dropdown-item" onclick="toggleFormat();">Toggle Format</button>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" data-toggle="modal" data-target="#modalScroll">Settings</a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#modalTab">Options..</a>
+        </div>
+      </div>
+    </nav>
+    <nav class="btn-group"></nav>
+    <nav class="btn-group">
+      <a class="btn btn-sm" href="/logout">Logout</a>
+    </nav>
+  </header>
+
+
+
   <div class="container mt-4">
-    <!-- Display Notebooks -->
-    <h2>Notebooks</h2>
-    <ul>
-      <% for (const notebook of notebooks) { %>
-        <li>
-          <a href="/notebooks/read/<%= notebook.id %>">
-            <%= notebook.title %>
-          </a>
-        </li>
-        <% } %>
-    </ul>
+    <div class="col-md-6 mx-auto"> <!-- Set the width to half of the container -->
+      <ul class="list-group">
+        <% for (const notebook of notebooks) { %>
+          <li class="list-group-item">
+            <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
+            <a href="/notebooks/read/<%= notebook.id %>">
+              <%= notebook.title %>
+            </a>
+          </li>
+          <% } %>
 
-    <!-- Display Notes Without Notebook -->
-    <h2>Notes Without Notebook</h2>
-    <ul>
-      <% for (const note of notesWithoutNotebook) { %>
-        <li>
-          <a href="/notes/read/<%= note.id %>">
-            <%= note.title %>
-          </a>
-        </li>
-        <% } %>
-    </ul>
+            <% for (const note of notesWithoutNotebook) { %>
+              <li class="list-group-item">
+                <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
+                <a href="/notes/read/<%= note.id %>">
+                  <i class="fas fa-sticky-note"></i>
+                  <%= note.title %>
+                </a>
+              </li>
+              <% } %>
+      </ul>
+    </div>
   </div>
-
-<%- include('partials/_footer') %>
+  <%- include('partials/_footer') %>
