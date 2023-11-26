@@ -83,4 +83,19 @@ const updateNote = async (noteId, updatedBody) => {
   }
 };
 
-module.exports = { getNoteById, getNotes, addNewNote, deleteNoteByNoteId, createNote, updateNote }
+
+const getNotesWithoutNotebookByUserId = async (userId) => {
+  try {
+    const query = `
+      SELECT *
+      FROM notes
+      WHERE user_id = $1 AND notebook_id IS NULL;
+    `;
+    const result = await db.query(query, [userId]);
+    return result.rows;
+  } catch (error) {
+    throw new Error(`Error getting notes without notebook: ${error.message}`);
+  }
+};
+
+module.exports = { getNoteById, getNotes, addNewNote, deleteNoteByNoteId, createNote, updateNote, getNotesWithoutNotebookByUserId }
