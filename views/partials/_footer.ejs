@@ -34,7 +34,8 @@
 			</div>
 			<div class="modal-body">
 				<!-- Add your form for creating a new notebook here -->
-				<form action="/notebooks/new" method="POST">
+				<!-- TODO: Fix this end point to point to notebooks "/notebooks/new"  not notes -->
+				<form action="/notes/newNotebook" method="POST">
 					<div class="mb-3">
 						<label for="notebookTitle" class="form-label">Notebook Title</label>
 						<input type="text" class="form-control" id="notebookTitle" name="title"
