@@ -1,0 +1,29 @@
+<%- include('partials/_header') %>
+
+  <div class="container mt-4">
+    <!-- Display Notebooks -->
+    <h2>Notebooks</h2>
+    <ul>
+      <% for (const notebook of notebooks) { %>
+        <li>
+          <a href="/catalogue/notebook/<%= notebook.id %>">
+            <%= notebook.title %>
+          </a>
+        </li>
+        <% } %>
+    </ul>
+
+    <!-- Display Notes Without Notebook -->
+    <h2>Notes Without Notebook</h2>
+    <ul>
+      <% for (const note of notesWithoutNotebook) { %>
+        <li>
+          <a href="/notes/read/<%= note.id %>">
+            <%= note.title %>
+          </a>
+        </li>
+        <% } %>
+    </ul>
+  </div>
+
+<%- include('partials/_footer') %>
