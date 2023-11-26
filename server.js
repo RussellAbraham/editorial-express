@@ -45,7 +45,7 @@ app.use('/logout', logoutRoutes);
 app.use('/register', registerRoutes);
 app.use('/notes', notesRoutes);
 app.use('/notebooks', notebooksRoutes); // Use the notebooks routes in the notes routes
-app.use('/catalogue', catalogueRoutes); // Use the notebooks routes in the notes routes
+app.use('/catalogue', catalogueRoutes); // Use the catalogue routes in the notes routes
 
 // Home page
 app.get('/', (req, res) => {
