@@ -1,3 +1,8 @@
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+});
+
+
 function searchFunction () {
   let input = document.getElementById("searchInput");
   let filter = input.value.toLowerCase();

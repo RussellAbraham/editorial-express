@@ -93,11 +93,20 @@ router.get('/read/:id', async (req, res) => {
 
   const noteId = req.params.id;
 
-  const note = await getNoteById(noteId);
-  res.locals.title = 'Editor';
-
-  // Render the editor view with the note content
-  res.render('editor', { note });
+  try {
+    const note = await getNoteById(noteId);
+    const userNote = await getNotes(userId);
+    const templateVars = {
+      note,
+      userNote
+    }
+    res.locals.title = 'Editor';
+    // Render the editor view with the note content
+    res.render('editor', templateVars);
+  } catch (error) {
+    console.log("Error reading note: ", error);
+    res.status(500).send('Error reading note.');
+  }
 });
 
 // POST route to handle the update
