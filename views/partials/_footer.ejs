@@ -24,11 +24,45 @@
 		  </div>
 		</div>
 
+    		<!-- Modal -->
+    <% if (typeof userNote !== 'undefined' && userNote) { %>
+      <div class="modal fade" id="searchNoteModal" tabindex="-1" aria-labelledby="searchNoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="searchNoteModalLabel">Search Result</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="searchInput" class="form-label">What are you looking for?</label>
+                  <input type="text" class="form-control" id="searchInput" onkeyup="serachFunction()" name="title" aria-describedby="searchHelp">
+                  <div id="searchHelp" class="form-text">Search Results</div>
+                </div>
+                <!-- <button type="submit" class="btn btn-primary">Create Note</button> -->
+              </form>
+              <ul id="searchList">
+                <% for (const note of userNote) { %>
+                  <li>
+                      <a href="/notes/read/<%= note.id %>">
+                        <%= note.title %>
+                      </a>
+                  </li>
+                <% }%>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }%>
+
   <!-- Bootstrap JS -->
   <script src="/vendor/jquery/jquery.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
   <script src="/scripts/main.js"></script>
   <script src="/scripts/plugins.js"></script>
+  <script src="/scripts/search.js"></script>
 </body>
 </html>
