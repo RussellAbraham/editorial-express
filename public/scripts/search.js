@@ -1,7 +1,4 @@
-document.getElementById('searchForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-});
-
+document.getElementById('searchForm').addEventListener('submit', e => e.preventDefault());
 
 function searchFunction () {
   let input = document.getElementById("searchInput");
