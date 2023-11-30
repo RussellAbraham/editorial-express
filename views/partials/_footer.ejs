@@ -40,17 +40,20 @@
                   <input type="text" class="form-control" id="searchInput" onkeyup="searchFunction()" name="title" aria-describedby="searchHelp">
                   <div id="searchHelp" class="form-text">Search Results</div>
                 </div>
-                <!-- <button type="submit" class="btn btn-primary">Create Note</button> -->
               </div>
-              <ul id="searchList" class="list-group">
-                <% for (const note of userNote) { %>
-                  <li class="list-group-item">
-                      <a href="/notes/read/<%= note.id %>">
-                        <%= note.title %>
-                      </a>
-                  </li>
-                <% }%>
-              </ul>
+              <div id="searchList">
+                <div class="mt-1">
+                  <ul id="searchList" class="list-group list-group-flush">
+                    <% for (const note of userNote) { %>
+                      <li class="list-group-item">
+                          <a href="/notes/read/<%= note.id %>">
+                            <%= note.title %>
+                          </a>
+                      </li>
+                    <% }%>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
