@@ -36,6 +36,23 @@ const setThemeOnLoad = () => {
   }
 };
 
+// Function to open a print window with the editor content
+// the `editor` global variable should exist
+const printDocument = () => {
+  const printWindow = window.open("", "_blank", "width=450,height=470,menubar=yes,toolbar=yes,location=yes,scrollbars=yes");
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html><html><head><title>Print</title></head><body onload="print();">${editor.getData()}</body></html>`);
+
+  // Include CKEditor 5 styles
+  const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+  stylesheets.forEach((stylesheet) => {
+    printWindow.document.head.appendChild(stylesheet.cloneNode(true));
+  });
+
+  printWindow.document.close();
+};
+
+
 // should fire first
 document.addEventListener('DOMContentLoaded', function(event){
   setThemeOnLoad();
