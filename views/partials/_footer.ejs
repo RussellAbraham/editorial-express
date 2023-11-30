@@ -37,11 +37,12 @@
               <div id="searchForm">
                 <div class="mb-3">
                   <label for="searchInput" class="form-label">What are you looking for?</label>
-                  <input type="text" class="form-control" id="searchInput" onkeyup="searchFunction()" name="title" aria-describedby="searchHelp">
+                  <input type="text" class="form-control" id="searchInput" oninput="searchFunction()" name="title" aria-describedby="searchHelp">
                   <div id="searchHelp" class="form-text">Search Results</div>
                 </div>
               </div>
               <div id="searchList">
+                <div id ="searchMessage"></div>
                 <div class="mt-1">
                   <ul id="searchList" class="list-group list-group-flush">
                     <% for (const note of userNote) { %>

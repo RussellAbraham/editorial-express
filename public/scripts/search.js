@@ -1,18 +1,33 @@
 //document.getElementById('searchForm').addEventListener('submit', e => e.preventDefault());
 
 function searchFunction () {
+  searchMessage.innerHTML = ''
   let input = document.getElementById("searchInput");
   let filter = input.value.toLowerCase();
   let ul = document.getElementById("searchList");
   let li = ul.getElementsByTagName("li");
-  console.log(li)
+  let currentCount = 0;
+  // let searchMessage = document.getElementById('searchMessage');
+  // searchMessage.style.display = 'none'
   for (let i = 0; i < li.length; i++) {
     let a = li[i].getElementsByTagName("a")[0];
+
     if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
       li[i].style.display = "";
+      currentCount++;
     } else {
       li[i].style.display = "none";
+      currentCount--;
     }
+    console.log(currentCount)
+  }
+  if (currentCount === -5) {
+    searchMessage.innerHTML = [
+      `<div class="alert alert-danger alert-dismissible" role="alert">`,
+      `   <div class="d-flex justify-content-center">Nothing here...</div>`,
+      '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+      '</div>'
+    ].join('');
   }
 }
 
