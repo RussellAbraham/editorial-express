@@ -1,4 +1,4 @@
-document.getElementById('searchForm').addEventListener('submit', e => e.preventDefault());
+//document.getElementById('searchForm').addEventListener('submit', e => e.preventDefault());
 
 function searchFunction () {
   let input = document.getElementById("searchInput");
@@ -61,7 +61,7 @@ function searchFunction () {
 //   for (let i = 0; i < li.length; i++) {
 //     let a = li[i].getElementsByTagName("a")[0];
 //     let text = a.innerHTML.toLowerCase();
-//     console.log(text, filter, distance)
+//     // console.log(text, filter, distance)
 //     // Skip further calculation if the length difference is greater than the threshold
 //     if (Math.abs(filter.length - text.length) > threshold) {
 //         li[i].style.display = "none";

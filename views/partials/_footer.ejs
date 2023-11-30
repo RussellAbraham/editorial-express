@@ -34,17 +34,17 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="searchForm">
+              <div id="searchForm">
                 <div class="mb-3">
                   <label for="searchInput" class="form-label">What are you looking for?</label>
                   <input type="text" class="form-control" id="searchInput" onkeyup="searchFunction()" name="title" aria-describedby="searchHelp">
                   <div id="searchHelp" class="form-text">Search Results</div>
                 </div>
                 <!-- <button type="submit" class="btn btn-primary">Create Note</button> -->
-              </form>
-              <ul id="searchList">
+              </div>
+              <ul id="searchList" class="list-group">
                 <% for (const note of userNote) { %>
-                  <li>
+                  <li class="list-group-item">
                       <a href="/notes/read/<%= note.id %>">
                         <%= note.title %>
                       </a>
