@@ -57,8 +57,13 @@
   </header>
 
   <main class="container mt-4">
+      <div class="d-flex justify-content-between">
+        <div>
+          <%- note.title %>
+        </div>
 
-
+        <button>Edit</button>
+      </div>
         <!-- Use <%- %> to render HTML unescaped -->
         <div id="editor" class="form-control">
           <%- note.body %>
