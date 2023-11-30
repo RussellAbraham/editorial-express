@@ -26,36 +26,25 @@ router.get("/", async (req, res) => {
   }
 });
 
-// New route to handle note deletion using POST
-router.post('/delete/:id', async (req, res) => {
-  const noteId = req.params.id;
-  const userId = req.cookies["user_id"];
+// Route for reading a specific note
+router.get('/read/:id', async (req, res) => {
 
+  const userId = req.cookies['user_id']
+
+  //if user is not logged in, redirect to the login page
   if (!userId) {
-    res.status(500).send('User currently not logged in!')
-  } else {
-    try {
-      // Add logic to check if the note belongs to the current user or has the right permissions before deleting
-      // This is just a basic example and should be enhanced based on your authentication and authorization logic
-      // Add notification for when the notes have been deleted
-
-      await deleteNoteByNoteId(noteId);
-      res.redirect('/notes'); // Redirect back to the notes page after deletion
-    } catch (error) {
-      console.error('Error deleting note:', error);
-      res.status(500).send('Error deleting note');
-    }
+    // Redirect to the login page or handle unauthenticated access as appropriate
+    return res.redirect('/login');
   }
+
+  const noteId = req.params.id;
+
+  const note = await getNoteById(noteId);
+  res.locals.title = 'Editor';
+
+  // Render the editor view with the note content
+  res.render('editor', { note });
 });
-
-// Route for rendering the form
-
-// superceded with modal
-// router.get('/new', (req, res) => {
-
-//   res.locals.title = 'New Note';
-//   res.render('newNoteForm');
-// });
 
 // Route for handling the form submission
 router.post('/new', async (req, res) => {
@@ -80,26 +69,6 @@ router.post('/new', async (req, res) => {
   }
 });
 
-// Route for reading a specific note
-router.get('/read/:id', async (req, res) => {
-
-  const userId = req.cookies['user_id']
-
-  //if user is not logged in, redirect to the login page
-  if (!userId) {
-    // Redirect to the login page or handle unauthenticated access as appropriate
-    return res.redirect('/login');
-  }
-
-  const noteId = req.params.id;
-
-  const note = await getNoteById(noteId);
-  res.locals.title = 'Editor';
-
-  // Render the editor view with the note content
-  res.render('editor', { note });
-});
-
 // POST route to handle the update
 router.post('/updateNote', async (req, res) => {
   console.log("Updating notes");
@@ -121,41 +90,26 @@ router.post('/updateNote', async (req, res) => {
   }
 });
 
+// New route to handle note deletion using POST
+router.post('/delete/:id', async (req, res) => {
+  const noteId = req.params.id;
+  const userId = req.cookies["user_id"];
 
-// router.post('/updates-note', async (req, res) => {
-//   try {
-//     // Your updateNote logic here...
-//     console.log(req)
+  if (!userId) {
+    res.status(500).send('User currently not logged in!')
+  } else {
+    try {
+      // Add logic to check if the note belongs to the current user or has the right permissions before deleting
+      // This is just a basic example and should be enhanced based on your authentication and authorization logic
+      // Add notification for when the notes have been deleted
 
-//     res.json({ success: true, message: 'Note updated successfully' });
-//   } catch (error) {
-//     console.error('Error updating note:', error);
-//     res.status(500).json({ success: false, message: 'Error updating note' });
-//   }
-// });
-
-
-
-
-
-
-
-// not used
-// router.get('/:id', async (req, res) => {
-//   res.locals.title = note.title
-
-//   if (!userId) {
-//     // Redirect to the login page or handle unauthenticated access as appropriate
-//     return res.redirect('/login');
-//   } else {
-//     const note = await getNoteById(req.params.id)
-//     const templateVars = {
-//       note
-//     }
-//     res.render('editor', templateVars)
-//   }
-// });
-
-
+      await deleteNoteByNoteId(noteId);
+      res.redirect('/notes'); // Redirect back to the notes page after deletion
+    } catch (error) {
+      console.error('Error deleting note:', error);
+      res.status(500).send('Error deleting note');
+    }
+  }
+});
 
 module.exports = router;
