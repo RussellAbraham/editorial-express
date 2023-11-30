@@ -40,6 +40,7 @@
               View
           </button>
           <div class="dropdown-menu" aria-labelledby="viewDropDown">
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#searchNoteModal">Search &#128269</a>
               <button class="dropdown-item" onclick="toggleSource();">View Source</button>
               <button class="dropdown-item" onclick="toggleEdit();">Toggle Edit</button>
               <button class="dropdown-item" onclick="toggleFormat();">Toggle Format</button>
@@ -56,8 +57,6 @@
   </header>
 
   <main class="container mt-4">
-
-
         <!-- Use <%- %> to render HTML unescaped -->
         <div id="editor" class="form-control">
           <%- note.body %>

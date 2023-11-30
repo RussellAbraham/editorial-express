@@ -69,6 +69,35 @@ router.post('/new', async (req, res) => {
   }
 });
 
+// Route for reading a specific note
+router.get('/read/:id', async (req, res) => {
+
+  const userId = req.cookies['user_id']
+
+  //if user is not logged in, redirect to the login page
+  if (!userId) {
+    // Redirect to the login page or handle unauthenticated access as appropriate
+    return res.redirect('/login');
+  }
+
+  const noteId = req.params.id;
+
+  try {
+    const note = await getNoteById(noteId);
+    const userNote = await getNotes(userId);
+    const templateVars = {
+      note,
+      userNote
+    }
+    res.locals.title = 'Editor';
+    // Render the editor view with the note content
+    res.render('editor', templateVars);
+  } catch (error) {
+    console.log("Error reading note: ", error);
+    res.status(500).send('Error reading note.');
+  }
+});
+
 // POST route to handle the update
 router.post('/updateNote', async (req, res) => {
   console.log("Updating notes");
