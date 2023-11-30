@@ -1,6 +1,33 @@
 $(document).ready(function() {
   let editor;
 
+  // Function to handle saving the document
+  const saveDocument = async () => {
+    const updatedBody = editor.getData();
+
+    // Extract noteId from the current URL
+    const noteId = window.location.pathname.split('/').pop();
+
+    // Send the updatedBody to the server for database update
+    try {
+      const response = await $.ajax({
+        url: '/notes/updateNote',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          noteId: noteId, // replace with the actual note ID
+          updatedBody: updatedBody,
+        }),
+      });
+      console.log('Success:', response);
+      flash('Saved note to the database', 'success', document.getElementById('flashMessage'));
+      // Handle success, e.g., show a success message
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error, e.g., show an error message
+    }
+  };
+
   // Initialize CKEditor
   ClassicEditor
     .create(document.querySelector('#editor'), {
@@ -10,32 +37,9 @@ $(document).ready(function() {
       editor = newEditor;
       window.editor = newEditor;
       console.log(editor);
-      $('#saveButton').on('click', () => {
-        const updatedBody = editor.getData();
 
-        // Extract noteId from the current URL
-        const noteId = window.location.pathname.split('/').pop();
-
-        // Send the updatedBody to the server for database update
-        $.ajax({
-          url: '/notes/updateNote',
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            noteId: noteId, // replace with the actual note ID
-            updatedBody: updatedBody,
-          }),
-          success: function (data) {
-            console.log('Success:', data);
-            // Handle success, e.g., show a success message
-
-          },
-          error: function (error) {
-            console.error('Error:', error);
-            // Handle error, e.g., show an error message
-          },
-        });
-      });
+      // Attach click event listener to the save button
+      $('#saveButton').on('click', saveDocument);
     })
     .catch(error => {
       console.error(error);
@@ -49,13 +53,17 @@ $(document).ready(function() {
     switch (mainCommand) {
       case 'sql':
         // Handle command to post to the server
-        const response = await $.ajax({
-          url: '/notes/command',
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({ command }),
-        });
-        term.echo(JSON.stringify(response, null, 2));
+        try {
+          const response = await $.ajax({
+            url: '/notes/command',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ command }),
+          });
+          term.echo(JSON.stringify(response, null, 2));
+        } catch (error) {
+          console.error('Error:', error);
+        }
         break;
 
       case 'edit':
@@ -67,7 +75,7 @@ $(document).ready(function() {
 
       case 'source':
         term.echo(editor.getData());
-      break
+        break;
 
       case 'clear':
         term.clear();
