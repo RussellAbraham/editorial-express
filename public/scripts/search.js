@@ -14,14 +14,14 @@ function searchFunction () {
 
     if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
       li[i].style.display = "";
-      currentCount++;
+      currentCount--;
     } else {
       li[i].style.display = "none";
-      currentCount--;
+      currentCount++;
     }
     console.log(currentCount)
   }
-  if (currentCount === -5) {
+  if (currentCount === li.length) {
     searchMessage.innerHTML = [
       `<div class="alert alert-danger alert-dismissible" role="alert">`,
       `   <div class="d-flex justify-content-center">Nothing here...</div>`,
