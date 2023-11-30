@@ -21,32 +21,32 @@ const addNewNote = (item) => {
 
 const getNotes = (userId) => {
   return db.query('SELECT * FROM notes WHERE user_id = $1', [userId])
-  .then(data => {
-    return data.rows;
-  })
-  .catch((error) => {
-    console.log("error :", error.message);
-  });
+    .then(data => {
+      return data.rows;
+    })
+    .catch((error) => {
+      console.log("error :", error.message);
+    });
 }
 
 const getNoteById = (noteId) => {
   return db.query('SELECT * FROM notes WHERE id = $1;', [noteId])
-  .then(data => {
-    return data.rows[0]
-  })
-  .catch((error) => {
-    console.log("error :", error.message);
-  });
+    .then(data => {
+      return data.rows[0]
+    })
+    .catch((error) => {
+      console.log("error :", error.message);
+    });
 }
 
 const deleteNoteByNoteId = (noteId) => {
   return db.query('DELETE FROM notes WHERE id = $1;', [noteId],)
-  .then(() => {
-    console.log('note deleted successfully');
-  })
-  .catch((error) => {
-    console.log("error :", error.message);
-  });
+    .then(() => {
+      console.log('note deleted successfully');
+    })
+    .catch((error) => {
+      console.log("error :", error.message);
+    });
 }
 
 async function createNote(userId, title, body) {
@@ -83,4 +83,36 @@ const updateNote = async (noteId, updatedBody) => {
   }
 };
 
-module.exports = { getNoteById, getNotes, addNewNote, deleteNoteByNoteId, createNote, updateNote }
+
+const getNotesWithoutNotebookByUserId = async (userId) => {
+  try {
+    const query = `
+      SELECT *
+      FROM notes
+      WHERE user_id = $1 AND notebook_id IS NULL;
+    `;
+    const result = await db.query(query, [userId]);
+    return result.rows;
+  } catch (error) {
+    throw new Error(`Error getting notes without notebook: ${error.message}`);
+  }
+};
+
+// In your notes.js queries file
+const getNotesByNotebookIdAndUserId = async (notebookId, userId) => {
+  try {
+    const query = `
+      SELECT *
+      FROM notes
+      WHERE user_id = $1 AND notebook_id = $2;
+    `;
+    const result = await db.query(query, [userId, notebookId]);
+    return result.rows;
+  } catch (error) {
+    throw new Error(`Error getting notes by notebook ID and user ID: ${error.message}`);
+  }
+};
+
+
+
+module.exports = { getNoteById, getNotes, addNewNote, deleteNoteByNoteId, createNote, updateNote, getNotesWithoutNotebookByUserId, getNotesByNotebookIdAndUserId }
