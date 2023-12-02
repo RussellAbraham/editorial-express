@@ -1,51 +1,42 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const db = require("../db/connection");
 const { getUserByUserName } = require("../db/queries/users");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  // template variable for the document title
-  res.locals.title = "Login";
-
-  const userId  = req.cookies["user_id"];
-
-  if (!userId) {
-    return res.render('login');
-  } else {
-    res.redirect("/notes");
+router.get("/", async (req, res) => {
+  const userId = req.cookies["user_id"];
+  if (userId) {
+    res.redirect("/notebooks");
+    return;
   }
+  res.locals.title = "Login";
+  res.render('login');
 });
 
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
+
   try {
-    const testIfUserExists = await getUserByUserName(username);
-    if (!testIfUserExists) {
-      console.log("username does not exist");
+    const user = await getUserByUserName(username);
+
+    if (!user) {
+      console.log("Username does not exist");
       return res.status(401).send("Username does not exist");
     }
-    const passwordMatch = await bcrypt.compare(
-      password,
-      testIfUserExists.password
-    );
-    if (passwordMatch) {
-      console.log("Login success");
-      const user = await getUserByUserName(username);
-      if (user) {
-        const userId = user.id;
-        res.cookie("user_id", userId);
-        res.redirect("/notes");
-      } else {
-        console.error("Not found");
-        res.status(500).send("Error");
-      }
-    } else {
-      console.error("No match");
-      res.status(401).send("No match");
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      console.error("Password does not match");
+      return res.status(401).send("Password does not match");
     }
+
+    console.log("Login success");
+    const userId = user.id;
+    res.cookie("user_id", userId);
+    res.redirect("/notebooks");
   } catch (err) {
-    console.error("Error");
+    console.error("Error:", err);
     res.status(500).send("Error");
   }
 });

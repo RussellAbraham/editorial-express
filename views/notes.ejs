@@ -47,12 +47,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="viewDropDown">
               <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#searchNoteModal">Search &#128269;</a>
-              <button class="dropdown-item" onclick="toggleSource();">View Source</button>
-              <button class="dropdown-item" onclick="toggleEdit();">Toggle Edit</button>
-              <button class="dropdown-item" onclick="toggleFormat();">Toggle Format</button>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" data-toggle="modal" data-target="#modalScroll">Settings</a>
-              <a class="dropdown-item" data-toggle="modal" data-target="#modalTab">Options..</a>
           </div>
       </div>
     </nav>
@@ -81,7 +76,7 @@
 
               <!-- Replace the creation date with a button for reading and deleting -->
               <div class="d-flex align-items-center">
-                <a href="/notes/read/<%= note.id %>" class="btn btn-primary me-2">Read</a>
+                <a href="/notes/<%= note.id %>" class="btn btn-primary me-2">Read</a>
                 <form action="/notes/delete/<%= note.id %>" method="POST">
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>

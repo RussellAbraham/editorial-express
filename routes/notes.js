@@ -2,21 +2,25 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
 const { getUserById } = require('../db/queries/users');
-const { getNotes, getNoteById, deleteNoteByNoteId, createNote, updateNote } = require('../db/queries/notes');
+const { getNotesByNotebookId, getNotesWithoutNotebookByUserId, getNotes, getNoteById, deleteNoteByNoteId, createNote, updateNote } = require('../db/queries/notes');
+const { getNotebooksByUserId } = require('../db/queries/notebooks');
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   const userId = req.cookies["user_id"];
 
   if (!userId) {
-    // Redirect to the login page or handle unauthenticated access as appropriate
     return res.redirect('/login');
   }
 
   try {
     const userNote = await getNotes(userId);
+    const notebooks = await getNotebooksByUserId(userId);
+    const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     const templateVars = {
       userNote,
+      notebooks,
+      notesWithoutNotebook
     };
     res.locals.title = "Notes";
     res.render("notes", templateVars);
@@ -26,43 +30,20 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Route for reading a specific note
-router.get('/read/:id', async (req, res) => {
-
-  const userId = req.cookies['user_id']
-
-  //if user is not logged in, redirect to the login page
-  if (!userId) {
-    // Redirect to the login page or handle unauthenticated access as appropriate
-    return res.redirect('/login');
-  }
-
-  const noteId = req.params.id;
-
-  const note = await getNoteById(noteId);
-  res.locals.title = 'Editor';
-
-  // Render the editor view with the note content
-  res.render('editor', { note });
-});
 
 // Route for handling the form submission
 router.post('/new', async (req, res) => {
-  const { title } = req.body;
+  const { title, body, notebookId } = req.body;
   const userId = req.cookies['user_id'];
 
-  //if user is not logged in, redirect to the login page
   if (!userId) {
-    // Redirect to the login page or handle unauthenticated access as appropriate
     return res.redirect('/login');
   }
 
   try {
-    // Call a function to create a new note in the database
-    await createNote(userId, title, '');
+    const newNote = await createNote(userId, title, body, notebookId);
 
-    // Redirect the user to the notes page or any other page you prefer
-    res.redirect('/notes');
+    res.redirect('/notebooks');
   } catch (error) {
     console.error('Error creating note:', error);
     res.status(500).send('Error creating note');
@@ -70,7 +51,7 @@ router.post('/new', async (req, res) => {
 });
 
 // Route for reading a specific note
-router.get('/read/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
   const userId = req.cookies['user_id']
 
@@ -85,9 +66,13 @@ router.get('/read/:id', async (req, res) => {
   try {
     const note = await getNoteById(noteId);
     const userNote = await getNotes(userId);
+    const notebooks = await getNotebooksByUserId(userId);
+    const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     const templateVars = {
       note,
-      userNote
+      userNote,
+      notebooks,
+      notesWithoutNotebook
     }
     res.locals.title = 'Editor';
     // Render the editor view with the note content
@@ -133,7 +118,7 @@ router.post('/delete/:id', async (req, res) => {
       // Add notification for when the notes have been deleted
 
       await deleteNoteByNoteId(noteId);
-      res.redirect('/notes'); // Redirect back to the notes page after deletion
+      res.redirect('/notebooks'); // Redirect back to the notes page after deletion
     } catch (error) {
       console.error('Error deleting note:', error);
       res.status(500).send('Error deleting note');
