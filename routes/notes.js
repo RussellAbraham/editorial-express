@@ -43,7 +43,7 @@ router.post('/new', async (req, res) => {
   try {
     const newNote = await createNote(userId, title, body, notebookId);
 
-    res.redirect('/notes');
+    res.redirect('/notebooks');
   } catch (error) {
     console.error('Error creating note:', error);
     res.status(500).send('Error creating note');
@@ -118,7 +118,7 @@ router.post('/delete/:id', async (req, res) => {
       // Add notification for when the notes have been deleted
 
       await deleteNoteByNoteId(noteId);
-      res.redirect('/notes'); // Redirect back to the notes page after deletion
+      res.redirect('/notebooks'); // Redirect back to the notes page after deletion
     } catch (error) {
       console.error('Error deleting note:', error);
       res.status(500).send('Error deleting note');
