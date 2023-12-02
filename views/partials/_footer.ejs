@@ -18,7 +18,7 @@
           <div class="input-group mb-3">
             <label class="input-group-text" for="notebookId">Select Notebooks:</label>
             <select class="form-select" id="notebookId" name="notebookId">
-              <option selected>...</option>
+              <option selected></option>
               <% for (const notebook of notebooks) {%>
                 <option value="<%= notebook.id %>"><%= notebook.title %></option>
               <% } %>
