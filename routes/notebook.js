@@ -1,6 +1,6 @@
 const express = require('express');
-const { createNewNotebook } = require('../db/queries/notebooks');
-const { getNotesByNotebookIdAndUserId } = require('../db/queries/notes');
+const { getNotebooksByUserId, createNewNotebook } = require('../db/queries/notebooks');
+const { getNotesWithoutNotebookByUserId, getNotesByNotebookIdAndUserId } = require('../db/queries/notes');
 const router = express.Router();
 
 // ---------- Functions for Notebooks -----------------
@@ -34,12 +34,16 @@ router.get("/:id", async (req, res) => {
   try {
     // Fetch the notes for the specific notebook and user
     const notesForNotebook = await getNotesByNotebookIdAndUserId(notebookId, userId);
+    const notebooks = await getNotebooksByUserId(userId);
+    const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     console.log(notesForNotebook)
     const userNote = notesForNotebook;
     const templateVars = {
       notesForNotebook,
       notebookId,
-      userNote
+      userNote,
+      notebooks,
+      notesWithoutNotebook
     };
     res.locals.title = "Notes";
     res.render("notes", templateVars); // You can create a new view for notes specific to a notebook
