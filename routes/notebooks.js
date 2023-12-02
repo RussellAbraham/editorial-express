@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
 const { getNotesByNotebookId, getNotesWithoutNotebookByUserId } = require('../db/queries/notes');
-const { getNotebooksByUserId } = require('../db/queries/notebooks');
+const { getNotebooksByUserId, createNewNotebook } = require('../db/queries/notebooks');
 
 router.get('/', async (req, res) => {
   const userId = req.cookies['user_id'];
@@ -29,7 +29,22 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Route for handling the form submission to create a new notebook
+router.post('/newNotebook', async (req, res) => {
+  const { title } = req.body;
+  const userId = req.cookies['user_id'];
+  if (!userId) {
+    return res.redirect('/login');
+  }
 
+  try {
+    await createNewNotebook(userId, title);
+    res.redirect('/notebooks');
+  } catch (error) {
+    console.error('Error creating notebook:', error);
+    res.status(500).send('Error creating notebook');
+  }
+});
 
 // Example route for notebook details
 router.get('/catalogue/notebook/:id', async (req, res) => {
