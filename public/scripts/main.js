@@ -13,19 +13,24 @@ const flash = (message, type, target) => {
 const switchTheme = () => {
   const html = document.querySelector('html');
   const currentTheme = html.dataset.bsTheme;
+  const link = document.createElement('link');
+  link.href = '/styles/darkmode.css';
+  link.rel = 'stylesheet';
+  link.id = 'darkmodeStyle';
 
   // Toggle the theme
   if (currentTheme === 'dark') {
     html.dataset.bsTheme = 'light';
+    document.querySelector('#darkmodeStyle').remove();
   } else if (currentTheme === 'light') {
     html.dataset.bsTheme = 'dark';
+    document.querySelector('head').appendChild(link);
   }
 
   // Save the theme to localStorage
   localStorage.setItem('theme', html.dataset.bsTheme);
 };
 
-// Function to set the theme on page load
 const setThemeOnLoad = () => {
   const html = document.querySelector('html');
   const savedTheme = localStorage.getItem('theme');
@@ -33,6 +38,15 @@ const setThemeOnLoad = () => {
   // If there's a saved theme, apply it
   if (savedTheme) {
     html.dataset.bsTheme = savedTheme;
+
+    // If dark mode is active, append the dark mode stylesheet to the head
+    if (savedTheme === 'dark') {
+      const link = document.createElement('link');
+      link.href = '/styles/darkmode.css';
+      link.rel = 'stylesheet';
+      link.id = 'darkmodeStyle';
+      document.querySelector('head').appendChild(link);
+    }
   }
 };
 
