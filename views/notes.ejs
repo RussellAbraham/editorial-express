@@ -81,7 +81,7 @@
 
               <!-- Replace the creation date with a button for reading and deleting -->
               <div class="d-flex align-items-center">
-                <a href="/notes/read/<%= note.id %>" class="btn btn-primary me-2">Read</a>
+                <a href="/notes/<%= note.id %>" class="btn btn-primary me-2">Read</a>
                 <form action="/notes/delete/<%= note.id %>" method="POST">
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>

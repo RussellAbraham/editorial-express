@@ -47,12 +47,9 @@
           View
         </button>
         <div class="dropdown-menu" aria-labelledby="viewDropDown">
-          <button class="dropdown-item" onclick="toggleSource();">View Source</button>
-          <button class="dropdown-item" onclick="toggleEdit();">Toggle Edit</button>
-          <button class="dropdown-item" onclick="toggleFormat();">Toggle Format</button>
+          <button class="dropdown-item" onclick="toggleEdit();">Search</button>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" data-toggle="modal" data-target="#modalScroll">Settings</a>
-          <a class="dropdown-item" data-toggle="modal" data-target="#modalTab">Options..</a>
+          <button class="dropdown-item" onclick="switchTheme();">Switch Theme</button>
         </div>
       </div>
     </nav>
@@ -64,28 +61,32 @@
 
 
 
-  <div class="container mt-4">
-    <div class="col-md-6 mx-auto"> <!-- Set the width to half of the container -->
-      <ul class="list-group">
-        <% for (const notebook of notebooks) { %>
+  <div class="container">
+
+    <section id="flash" class="mt-3"></section>
+
+    <ul class="list-group">
+
+      <% for (const notebook of notebooks) { %>
+        <li class="list-group-item">
+          <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
+          <a href="/notebook/<%= notebook.id %>">
+            <%= notebook.title %>
+          </a>
+        </li>
+      <% } %>
+
+      <% for (const note of notesWithoutNotebook) { %>
           <li class="list-group-item">
-            <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
-            <a href="/notebooks/read/<%= notebook.id %>">
-              <%= notebook.title %>
+            <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
+            <a href="/notes/<%= note.id %>">
+              <%= note.title %>
             </a>
           </li>
-          <% } %>
+      <% } %>
 
-            <% for (const note of notesWithoutNotebook) { %>
-              <li class="list-group-item">
-                <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
-                <a href="/notes/read/<%= note.id %>">
-                  <i class="fas fa-sticky-note"></i>
-                  <%= note.title %>
-                </a>
-              </li>
-              <% } %>
-      </ul>
-    </div>
+    </ul>
+
   </div>
-  <%- include('partials/_footer') %>
+
+<%- include('partials/_footer') %>

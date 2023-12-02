@@ -36,16 +36,18 @@ const loginRoutes = require('./routes/login');
 const logoutRoutes = require('./routes/logout');
 const registerRoutes = require('./routes/register');
 const notesRoutes = require('./routes/notes');
+const notebookRoutes = require('./routes/notebook'); // Import the notebook routes
 const notebooksRoutes = require('./routes/notebooks'); // Import the notebooks routes
-const catalogueRoutes = require('./routes/catalogue'); // Import the catalogue routes
+
 
 // Mount all resource routes
 app.use('/login', loginRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/register', registerRoutes);
 app.use('/notes', notesRoutes);
+app.use('/notebook', notebookRoutes); // Use the notebook routes in the notes routes
 app.use('/notebooks', notebooksRoutes); // Use the notebooks routes in the notes routes
-app.use('/catalogue', catalogueRoutes); // Use the catalogue routes in the notes routes
+
 
 // Home page
 app.get('/', (req, res) => {

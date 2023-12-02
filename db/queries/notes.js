@@ -113,6 +113,30 @@ const getNotesByNotebookIdAndUserId = async (notebookId, userId) => {
   }
 };
 
+// Function to get notes by notebook ID
+const getNotesByNotebookId = async (notebookId) => {
+  try {
+    const query = {
+      text: 'SELECT * FROM notes WHERE notebook_id = $1',
+      values: [notebookId],
+    };
+
+    const result = await db.query(query);
+    return result.rows;
+  } catch (error) {
+    throw error;
+  }
+};
 
 
-module.exports = { getNoteById, getNotes, addNewNote, deleteNoteByNoteId, createNote, updateNote, getNotesWithoutNotebookByUserId, getNotesByNotebookIdAndUserId }
+module.exports = {
+  getNoteById,
+  getNotesByNotebookId,
+  getNotes,
+  addNewNote,
+  deleteNoteByNoteId,
+  createNote,
+  updateNote,
+  getNotesWithoutNotebookByUserId,
+  getNotesByNotebookIdAndUserId
+};

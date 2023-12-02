@@ -1,38 +1,13 @@
+// In your notes.js route file or a new route file
 const express = require('express');
+const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
-const { createNewNotebook } = require('../db/queries/notebooks');
-const { getNotesByNotebookIdAndUserId } = require('../db/queries/notes');
-const router = express.Router();
+const { getNotesByNotebookId, getNotesWithoutNotebookByUserId } = require('../db/queries/notes');
+const { getNotebooksByUserId } = require('../db/queries/notebooks');
 
-// ---------- Functions for Notebooks -----------------
-
-// Route for handling the form submission to create a new notebook
-router.post('/newNotebook', async (req, res) => {
-  const { title } = req.body;
+router.get('/', async (req, res) => {
   const userId = req.cookies['user_id'];
-
-  // If the user is not logged in, redirect to the login page
-  if (!userId) {
-    return res.redirect('/login');
-  }
-
-  try {
-    // Call a function to create a new notebook in the database
-    await createNewNotebook(userId, title);
-
-    // Redirect the user to the notes page or any other page you prefer
-    res.redirect('/notes');
-  } catch (error) {
-    console.error('Error creating notebook:', error);
-    res.status(500).send('Error creating notebook');
-  }
-});
-
-// Change the route to handle "/notebook/:notebookId"
-router.get("/read/:notebookId", async (req, res) => {
-  const userId = req.cookies["user_id"];
-  const notebookId = req.params.notebookId;
 
   if (!userId) {
     // Redirect to the login page or handle unauthenticated access as appropriate
@@ -40,20 +15,34 @@ router.get("/read/:notebookId", async (req, res) => {
   }
 
   try {
-    // Fetch the notes for the specific notebook and user
-    const notesForNotebook = await getNotesByNotebookIdAndUserId(notebookId, userId);
-    const userNote = notesForNotebook;
+    const notebooks = await getNotebooksByUserId(userId);
+    const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     const templateVars = {
-      notesForNotebook,
-      notebookId,
-      userNote
+      notebooks,
+      notesWithoutNotebook,
     };
-    res.locals.title = "Notes";
-    res.render("notes", templateVars); // You can create a new view for notes specific to a notebook
+    res.locals.title = 'Notebooks';
+    res.render('notebooks', templateVars);
   } catch (error) {
-    console.error('Error retrieving notes for notebook:', error);
-    res.status(500).send('Error retrieving notes for notebook');
+    console.error('Error retrieving catalogue:', error);
+    res.status(500).send('Error retrieving catalogue');
   }
+});
+
+
+
+// Example route for notebook details
+router.get('/catalogue/notebook/:id', async (req, res) => {
+  const notebookId = req.params.id;
+  // Fetch notebook details and associated notes
+  // Render a template with notebook details and associated notes
+});
+
+// Example route for note details
+router.get('/catalogue/note/:id', async (req, res) => {
+  const noteId = req.params.id;
+  // Fetch note details
+  // Render a template with note details
 });
 
 

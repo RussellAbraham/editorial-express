@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- Modal for New Note -->
 <div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -8,12 +8,25 @@
 			</div>
 			<div class="modal-body">
 				<form action="/notes/new" method="POST">
+
 					<div class="mb-3">
 						<label for="noteTitle" class="form-label">Note Title</label>
 						<input type="text" class="form-control" id="noteTitle" name="title" aria-describedby="noteHelp">
-						<div id="noteHelp" class="form-text">We'll never share your email with anyone else.</div>
+						<div id="noteHelp" class="form-text">Enter title for your new note.</div>
 					</div>
+
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="notebookId">Select Notebooks:</label>
+            <select class="form-select" id="notebookId" name="notebookId">
+              <option selected>...</option>
+              <% for (const notebook of notebooks) {%>
+                <option value="<%= notebook.id %>"><%= notebook.title %></option>
+              <% } %>
+            </select>
+          </div>
+
 					<button type="submit" class="btn btn-primary">Create Note</button>
+
 				</form>
 			</div>
 			<div class="modal-footer">
