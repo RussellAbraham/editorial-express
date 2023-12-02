@@ -49,18 +49,31 @@ const deleteNoteByNoteId = (noteId) => {
     });
 }
 
-async function createNote(userId, title, body) {
-  const query = `
-    INSERT INTO notes (user_id, title, body, created_at, updated_at)
-    VALUES ($1, $2, $3, NOW(), NOW())
-    RETURNING *;
-  `;
+const createNote = async (userId, title, body, notebookId = null) => {
+  try {
+    let query;
+    let values;
 
-  const values = [userId, title, body];
+    if (notebookId) {
+      // If notebookId is provided, insert into the specific notebook
+      query = {
+        text: 'INSERT INTO notes (user_id, title, body, notebook_id, created_at, updated_at) VALUES ($1, $2, $3, $4, NOW(), NOW()) RETURNING *',
+        values: [userId, title, body, notebookId],
+      };
+    } else {
+      // If notebookId is not provided, insert into the general notes
+      query = {
+        text: 'INSERT INTO notes (user_id, title, body, created_at, updated_at) VALUES ($1, $2, $3, NOW(), NOW()) RETURNING *',
+        values: [userId, title, body],
+      };
+    }
 
-  const result = await db.query(query, values);
-  return result.rows[0];
-}
+    const result = await db.query(query);
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
 
 
 // Function to update a note in the database

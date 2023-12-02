@@ -33,20 +33,16 @@ router.get("/", async (req, res) => {
 
 // Route for handling the form submission
 router.post('/new', async (req, res) => {
-  const { title } = req.body;
+  const { title, body, notebookId } = req.body;
   const userId = req.cookies['user_id'];
 
-  //if user is not logged in, redirect to the login page
   if (!userId) {
-    // Redirect to the login page or handle unauthenticated access as appropriate
     return res.redirect('/login');
   }
 
   try {
-    // Call a function to create a new note in the database
-    await createNote(userId, title, '');
+    const newNote = await createNote(userId, title, body, notebookId);
 
-    // Redirect the user to the notes page or any other page you prefer
     res.redirect('/notes');
   } catch (error) {
     console.error('Error creating note:', error);
