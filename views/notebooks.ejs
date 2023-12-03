@@ -1,5 +1,6 @@
 <!-- notes.ejs -->
 <%- include('partials/_header') %>
+  <link rel="stylesheet" href="/styles/delete.css">
 
   <header class="navbar border-dark border-bottom p-1">
     <nav class="btn-group">
@@ -69,24 +70,30 @@
 
       <% for (const notebook of notebooks) { %>
         <li class="list-group-item">
+          <span class="delete-icon" onclick="deleteItem('<%= notebook.id %>')">
+            <i class="fa fa-trash"></i>
+          </span>
           <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
           <a href="/notebook/<%= notebook.id %>">
             <%= notebook.title %>
           </a>
         </li>
-      <% } %>
+        <% } %>
 
-      <% for (const note of notesWithoutNotebook) { %>
-          <li class="list-group-item">
-            <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
-            <a href="/notes/<%= note.id %>">
-              <%= note.title %>
-            </a>
-          </li>
-      <% } %>
+          <% for (const note of notesWithoutNotebook) { %>
+            <li class="list-group-item">
+              <span class="delete-icon" onclick="deleteItem('<%= note.id %>')">
+                <i class="fa fa-trash"></i>
+              </span>
+              <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
+              <a href="/notes/<%= note.id %>">
+                <%= note.title %>
+              </a>
+            </li>
+            <% } %>
 
     </ul>
 
   </div>
 
-<%- include('partials/_footer') %>
+  <%- include('partials/_footer') %>
