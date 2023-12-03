@@ -66,7 +66,6 @@
 </div>
 
    		<!-- Modal -->
-       <% if (typeof userNote !== 'undefined' && userNote) { %>
         <div class="modal fade" id="searchNoteModal" tabindex="-1" aria-labelledby="searchNoteModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -86,9 +85,20 @@
                   <div id ="searchMessage"></div>
                   <div class="mt-1">
                     <ul id="searchList" class="list-group list-group-flush">
-                      <% for (const note of userNote) { %>
+                      <% for (const notebook of notebooks) { %>
                         <li class="list-group-item">
-                            <a href="/notes/read/<%= note.id %>">
+                          <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
+                            <a href="/notebook/<%= notebook.id %>">
+                              <%= notebook.title %>
+                            </a>
+                        </li>
+                      <% }%>
+                    </ul>
+                    <ul id="searchList" class="list-group list-group-flush">
+                      <% for (const note of notesWithoutNotebook) { %>
+                        <li class="list-group-item">
+                          <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
+                            <a href="/notes/<%= note.id %>">
                               <%= note.title %>
                             </a>
                         </li>
@@ -100,7 +110,6 @@
             </div>
           </div>
         </div>
-      <% }%>
 
 
 <!-- Bootstrap JS -->
