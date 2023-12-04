@@ -10,8 +10,10 @@ $(document).ready(function () {
       $(this).blur();
       $(this).attr('disabled', true);
       const noteId = $(this).attr('id');
+      const isNotebook = $(this).hasClass("notebook-item");
+
       $.ajax({
-        url: '/notes/updateNoteTitle',
+        url: isNotebook ? '/notebook/updateNotebookTitle' : '/notes/updateNoteTitle',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
