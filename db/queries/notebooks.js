@@ -42,9 +42,23 @@ const getNotesByNotebookId = async (notebookId) => {
   }
 };
 
+// Function to delete a notebook by ID
+// TODO: Delete Notebooks and notes belonging 
+const deleteNotebookById = async function (notebookId) {
+  try {
+    const result = await db.none('DELETE FROM notebooks WHERE id = $1', [notebookId]);
+    console.log('Notebook deleted successfully');
+    return result;
+  } catch (error) {
+    console.error('Error deleting notebook:', error);
+    throw error; // Re-throw the error for handling in the calling function
+  }
+}
+
 
 module.exports = {
   createNewNotebook,
   getNotesByNotebookId,
-  getNotebooksByUserId
+  getNotebooksByUserId,
+  deleteNotebookById
 };
