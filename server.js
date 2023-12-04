@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
   if (!userId) {
     return res.render('index');
   } else {
-    res.redirect("/notes");
+    res.redirect("/notebooks");
   }
 });
 

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  //Click on X to delete Todo
+
   $(".text").on("dblclick", function (event) {
     $(this).attr('disabled', false);
     $(this).focus();
@@ -7,8 +7,10 @@ $(document).ready(function () {
 
   $(".text").on("keyup", function (event) {
     if (event.which === 13) {
+
       $(this).blur();
       $(this).attr('disabled', true);
+
       const noteId = $(this).attr('id');
       const isNotebook = $(this).hasClass("notebook-item");
 
@@ -23,16 +25,14 @@ $(document).ready(function () {
         success: function (data) {
           console.log('Success:', data);
           flash('updated title', 'success', document.getElementById('flash'));
-          // Handle success, e.g., show a success message
-
         },
         error: function (error) {
           console.error('Error:', error);
-          // Handle error, e.g., show an error message
         }
       })
-      //console.log($(this).attr);
+
     }
+
   });
 
 });

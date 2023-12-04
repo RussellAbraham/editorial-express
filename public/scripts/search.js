@@ -1,14 +1,11 @@
-//document.getElementById('searchForm').addEventListener('submit', e => e.preventDefault());
-
-function searchFunction () {
+const searchFunction  = () => {
   searchMessage.innerHTML = ''
   let input = document.getElementById("searchInput");
   let filter = input.value.toLowerCase();
   let ul = document.getElementById("searchList");
   let li = ul.getElementsByTagName("li");
   let currentCount = 0;
-  // let searchMessage = document.getElementById('searchMessage');
-  // searchMessage.style.display = 'none'
+
   for (let i = 0; i < li.length; i++) {
     let a = li[i].getElementsByTagName("a")[0];
 
@@ -29,7 +26,7 @@ function searchFunction () {
       '</div>'
     ].join('');
   }
-}
+};
 
 // function levenshteinDistance(a, b) {
 //   const matrix = [];

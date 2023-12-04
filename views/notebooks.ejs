@@ -1,75 +1,6 @@
-<!-- notes.ejs -->
 <%- include('partials/_header') %>
 
-  <header class="navbar border-dark border-bottom p-1">
-    <nav class="btn-group">
-
-      <a href="#" class="btn btn-sm pl-1 pr-1">&#9776;</a>
-
-      <div class="dropdown">
-        <button class="btn btn-sm dropdown-toggle" type="button" id="fileDropDown" data-bs-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          File
-        </button>
-        <div class="dropdown-menu" aria-labelledby="fileDropDown" tabindex="0">
-          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNoteModal">New Note</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNotebookModal">New Notebook</a>
-          <div class="dropdown-divider"></div>
-          <label for="inputFile" class="dropdown-item">Open</label>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item">Load</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item">Save</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item">Exit</a>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button class="btn btn-sm dropdown-toggle" type="button" id="editDropDown" data-bs-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Edit
-        </button>
-        <div class="dropdown-menu" aria-labelledby="editDropDown">
-          <button class="dropdown-item" onclick="execCmd('selectAll')">Select All</button>
-          <div class="dropdown-divider"></div>
-          <button class="dropdown-item" onclick="execCmd('undo');">Undo</button>
-          <button class="dropdown-item" onclick="execCmd('redo');">Redo</button>
-          <div class="dropdown-divider"></div>
-          <button class="dropdown-item" onclick="execCmd('cut');">Cut</button>
-          <button class="dropdown-item" onclick="execCmd('copy');">Copy</button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="btn btn-sm dropdown-toggle" type="button" id="viewDropDown" data-bs-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          View
-        </button>
-        <div class="dropdown-menu" aria-labelledby="viewDropDown">
-          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#searchNoteModal">Search &#128269;</a>
-          <div class="dropdown-divider"></div>
-          <button id="colourMode" class="dropdown-item">Switch Theme</button>
-        </div>
-      </div>
-    </nav>
-    <nav class="btn-group"></nav>
-    <nav class="btn-group">
-      <a class="btn btn-sm" href="/logout">Logout</a>
-    </nav>
-  </header>
-
-
-  <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a href="#">My Notebook 1/</a>
-    <span class="badge bg-danger rounded-pill">X</span>
-  </li> -->
-
-
-
-
-
-  <div class="container" id="container">
+  <main class="container mt-4" id="container">
 
     <section id="flash" class="mt-3"></section>
 
@@ -79,23 +10,23 @@
         <li class="list-group-item d-flex justify-content-between align-items-center notebook-item"
           id="<%= notebook.id %>">
           <a href="/notebook/<%= notebook.id %>">
-            <%= notebook.title %>
+            <%= notebook.title %>/
           </a>
           <span class="badge bg-danger rounded-pill">X</span>
         </li>
-        <% } %>
+      <% } %>
 
-          <% for (const note of notesWithoutNotebook) { %>
-            <li class="list-group-item d-flex justify-content-between align-items-center note-item" id="<%= note.id %>">
-              <a href="/notes/<%= note.id %>">
-                <%= note.title %>
-              </a>
-              <span class="badge bg-danger rounded-pill">X</span>
-            </li>
-            <% } %>
+      <% for (const note of notesWithoutNotebook) { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center note-item" id="<%= note.id %>">
+          <a href="/notes/<%= note.id %>">
+            <%= note.title %>
+          </a>
+          <span class="badge bg-danger rounded-pill">X</span>
+        </li>
+      <% } %>
 
     </ul>
 
-  </div>
+  </main>
 
-  <%- include('partials/_footer') %>
+<%- include('partials/_footer') %>

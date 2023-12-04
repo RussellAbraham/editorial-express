@@ -1,12 +1,11 @@
-// jQuery should fire second
+
 $(document).ready(function() {
 
   let editor;
 
     ClassicEditor
       .create(document.querySelector('#editor'), {
-        allowedContent: true, // This allows all HTML content
-        // Add any additional configuration options here
+        allowedContent: true,
       })
       .then(newEditor => {
         editor = newEditor;
@@ -25,17 +24,14 @@ $(document).ready(function() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-              noteId: noteId, // replace with the actual note ID
+              noteId: noteId,
               updatedBody: updatedBody,
             }),
             success: function (data) {
               console.log('Success:', data);
-              // Handle success, e.g., show a success message
-
             },
             error: function (error) {
               console.error('Error:', error);
-              // Handle error, e.g., show an error message
             },
           });
         });

@@ -1,126 +1,127 @@
-<!-- Modal for New Note -->
-<div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="newNoteModalLabel">Create Note</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form action="/notes/new" method="POST">
+  <!-- Modal for New Note -->
+  <div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
+  	<div class="modal-dialog">
+  		<div class="modal-content">
+  			<div class="modal-header">
+  				<h1 class="modal-title fs-5" id="newNoteModalLabel">Create Note</h1>
+  				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  			</div>
+  			<div class="modal-body">
+  				<form action="/notes/new" method="POST">
 
-					<div class="mb-3">
-						<label for="noteTitle" class="form-label">Note Title</label>
-						<input type="text" class="form-control" id="noteTitle" name="title" aria-describedby="noteHelp">
-						<div id="noteHelp" class="form-text">Enter title for your new note.</div>
-					</div>
+  					<div class="mb-3">
+  						<label for="noteTitle" class="form-label">Note Title</label>
+  						<input type="text" class="form-control" id="noteTitle" name="title" aria-describedby="noteHelp">
+  						<div id="noteHelp" class="form-text">Enter title for your new note.</div>
+  					</div>
 
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="notebookId">Select Notebooks:</label>
-            <select class="form-select" id="notebookId" name="notebookId">
-              <option selected></option>
-              <% for (const notebook of notebooks) {%>
-                <option value="<%= notebook.id %>"><%= notebook.title %></option>
-              <% } %>
-            </select>
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="notebookId">Select Notebooks:</label>
+              <select class="form-select" id="notebookId" name="notebookId">
+                <option selected></option>
+                <% for (const notebook of notebooks) {%>
+                  <option value="<%= notebook.id %>"><%= notebook.title %></option>
+                <% } %>
+              </select>
+            </div>
+
+  					<button type="submit" class="btn btn-primary">Create Note</button>
+
+  				</form>
+  			</div>
+  			<div class="modal-footer">
+  				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  				<!--<button type="button" class="btn btn-primary">Create Note</button>-->
+  			</div>
+  		</div>
+  	</div>
+  </div>
+
+  <!-- Modal for New Notebook -->
+  <div class="modal fade" id="newNotebookModal" tabindex="-1" aria-labelledby="newNotebookModalLabel" aria-hidden="true">
+  	<div class="modal-dialog">
+  		<div class="modal-content">
+  			<div class="modal-header">
+  				<h1 class="modal-title fs-5" id="newNotebookModalLabel">Create Notebook</h1>
+  				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  			</div>
+  			<div class="modal-body">
+  				<!-- Add your form for creating a new notebook here -->
+  				<!-- TODO: Fix this end point to point to notebooks "/notebooks/new"  not notes -->
+  				<form action="/notebooks/newNotebook" method="POST">
+  					<div class="mb-3">
+  						<label for="notebookTitle" class="form-label">Notebook Title</label>
+  						<input type="text" class="form-control" id="notebookTitle" name="title"
+  							aria-describedby="notebookHelp">
+  						<div id="notebookHelp" class="form-text">We'll never share your email with anyone else.</div>
+  					</div>
+  					<button type="submit" class="btn btn-primary">Create Notebook</button>
+  				</form>
+  			</div>
+  			<div class="modal-footer">
+  				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+
+  <!-- Search Modal -->
+  <div class="modal fade" id="searchNoteModal" tabindex="-1" aria-labelledby="searchNoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="searchNoteModalLabel">Search Result</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="searchForm">
+            <div class="mb-3">
+              <label for="searchInput" class="form-label">What are you looking for?</label>
+              <input type="text" class="form-control" id="searchInput" oninput="searchFunction()" name="title" aria-describedby="searchHelp">
+              <div id="searchHelp" class="form-text">Search Results</div>
+            </div>
           </div>
-
-					<button type="submit" class="btn btn-primary">Create Note</button>
-
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<!--<button type="button" class="btn btn-primary">Create Note</button>-->
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Modal for New Notebook -->
-<div class="modal fade" id="newNotebookModal" tabindex="-1" aria-labelledby="newNotebookModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="newNotebookModalLabel">Create Notebook</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<!-- Add your form for creating a new notebook here -->
-				<!-- TODO: Fix this end point to point to notebooks "/notebooks/new"  not notes -->
-				<form action="/notebooks/newNotebook" method="POST">
-					<div class="mb-3">
-						<label for="notebookTitle" class="form-label">Notebook Title</label>
-						<input type="text" class="form-control" id="notebookTitle" name="title"
-							aria-describedby="notebookHelp">
-						<div id="notebookHelp" class="form-text">We'll never share your email with anyone else.</div>
-					</div>
-					<button type="submit" class="btn btn-primary">Create Notebook</button>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-   		<!-- Modal -->
-        <div class="modal fade" id="searchNoteModal" tabindex="-1" aria-labelledby="searchNoteModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="searchNoteModalLabel">Search Result</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div id="searchForm">
-                  <div class="mb-3">
-                    <label for="searchInput" class="form-label">What are you looking for?</label>
-                    <input type="text" class="form-control" id="searchInput" oninput="searchFunction()" name="title" aria-describedby="searchHelp">
-                    <div id="searchHelp" class="form-text">Search Results</div>
-                  </div>
-                </div>
-                <div id="searchList">
-                  <div id ="searchMessage"></div>
-                  <div class="mt-1">
-                    <ul id="searchList" class="list-group list-group-flush">
-                      <% for (const notebook of notebooks) { %>
-                        <li class="list-group-item">
-                          <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
-                            <a href="/notebook/<%= notebook.id %>">
-                              <%= notebook.title %>
-                            </a>
-                        </li>
-                      <% }%>
-                    </ul>
-                    <ul id="searchList" class="list-group list-group-flush">
-                      <% for (const note of notesWithoutNotebook) { %>
-                        <li class="list-group-item">
-                          <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
-                            <a href="/notes/<%= note.id %>">
-                              <%= note.title %>
-                            </a>
-                        </li>
-                      <% }%>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+          <div id="searchList">
+            <div id ="searchMessage"></div>
+            <div class="mt-1">
+              <ul id="searchList" class="list-group list-group-flush">
+                <% for (const notebook of notebooks) { %>
+                  <li class="list-group-item">
+                    <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
+                      <a href="/notebook/<%= notebook.id %>">
+                        <%= notebook.title %>
+                      </a>
+                  </li>
+                <% }%>
+              </ul>
+              <ul id="searchList" class="list-group list-group-flush">
+                <% for (const note of notesWithoutNotebook) { %>
+                  <li class="list-group-item">
+                    <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
+                      <a href="/notes/<%= note.id %>">
+                        <%= note.title %>
+                      </a>
+                  </li>
+                <% }%>
+              </ul>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
 
-<!-- Bootstrap JS -->
-<script src="/vendor/jquery/jquery.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-<script src="/scripts/main.js"></script>
-<script src="/scripts/plugins.js"></script>
-<script src="/scripts/search.js"></script>
-<script src="/scripts/delete.js"></script>
-<script src="/scripts/editNote.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="/vendor/jquery/jquery.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script src="/scripts/main.js"></script>
+  <script src="/scripts/plugins.js"></script>
+  <script src="/scripts/search.js"></script>
+  <script src="/scripts/delete.js"></script>
+  <script src="/scripts/editNote.js"></script>
+
 </body>
 
 </html>

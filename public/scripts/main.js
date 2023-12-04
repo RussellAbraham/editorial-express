@@ -9,9 +9,3 @@ const flash = (message, type, target) => {
   ].join('');
   target.append(wrapper);
 };
-
-
-// fires when window unloads
-//window.addEventListener("beforeunload", function(event) {
-//  event.returnValue = "Are you sure?";
-//}, false);

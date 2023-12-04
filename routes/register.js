@@ -7,13 +7,11 @@ const { addUser, getUserById, getUserByUserName } = require('../db/queries/users
 const router  = express.Router();
 
 router.get('/', (req, res) => {
-  // template variable for document title
   res.locals.title = 'Register';
   res.render('register');
 });
 
 router.post('/', async (req, res) => {
-  // form values from register page
   const { email, password, username } = req.body;
 
   try {
@@ -37,7 +35,6 @@ router.post('/', async (req, res) => {
     console.error('Error');
     return res.status(500).send('Error')
   }
-
 
 });
 
