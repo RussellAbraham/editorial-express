@@ -1,5 +1,5 @@
 const express = require('express');
-const { getNotebooksByUserId, createNewNotebook, deleteNotebookById } = require('../db/queries/notebooks');
+const { getNotebooksByUserId, createNewNotebook, deleteNotebookById, getNotebookByNotebookId, updateNotebookTitle } = require('../db/queries/notebooks');
 const { getNotesWithoutNotebookByUserId, getNotesByNotebookIdAndUserId } = require('../db/queries/notes');
 const router = express.Router();
 
@@ -36,6 +36,7 @@ router.get("/:id", async (req, res) => {
     const notesForNotebook = await getNotesByNotebookIdAndUserId(notebookId, userId);
     const notebooks = await getNotebooksByUserId(userId);
     const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
+    const thisNotebook = await getNotebookByNotebookId(notebookId);
     console.log(notesForNotebook)
     const userNote = notesForNotebook;
     const templateVars = {
@@ -43,14 +44,28 @@ router.get("/:id", async (req, res) => {
       notebookId,
       userNote,
       notebooks,
-      notesWithoutNotebook
+      notesWithoutNotebook,
+      thisNotebook
     };
+    console.log(templateVars);
     res.locals.title = "Notes";
     res.render("notes", templateVars); // You can create a new view for notes specific to a notebook
   } catch (error) {
     console.error('Error retrieving notes for notebook:', error);
     res.status(500).send('Error retrieving notes for notebook');
   }
+});
+router.post('/updateNotebookTitle', async (req, res) => {
+
+  const { noteId, updatedTitle } = req. body;
+    try {
+      await updateNotebookTitle(noteId, updatedTitle);
+      // res.redirect('/notebooks'); // Redirect back to the notes page after deletion
+      res.json({success: true, message: "Notebook Title successfully deleted"})
+    } catch (error) {
+      console.error('Error deleting note:', error);
+      res.status(500).send('Error deleting note');
+    }
 });
 
 

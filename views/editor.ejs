@@ -52,8 +52,15 @@
     </nav>
   </header>
 
+
   <main class="container mt-4">
         <!-- Use <%- %> to render HTML unescaped -->
+        <section id="flash" class="mb-3"></section>
+        <div class="mb-3">
+          <label for="<%= note.id %>" class="form-label">Title</label>
+        <input id="<%= note.id %>" class="text form-control" type="text" value="<%= note.title %>" disabled="true">
+        </input>
+        </div>
         <div id="editor" class="form-control">
           <%- note.body %>
         </div>

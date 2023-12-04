@@ -96,6 +96,25 @@ const updateNote = async (noteId, updatedBody) => {
   }
 };
 
+// Function to update a note in the database
+const updateNoteTitle = async (noteId, updatedTitle) => {
+  try {
+    // Use your database query to update the note
+    const query = 'UPDATE notes SET title = $1, updated_at = NOW() WHERE id = $2';
+    const values = [updatedTitle, noteId];
+    await db.query(query, values);
+
+    // Optionally, you can return the updated note or any other data
+    const updatedNote = await getNoteById(noteId);
+    return updatedNote;
+
+  } catch (error) {
+    console.error('Error updating note in the database:', error);
+    throw error; // You may want to handle the error in a better way based on your application's needs
+  }
+};
+
+
 
 const getNotesWithoutNotebookByUserId = async (userId) => {
   try {
@@ -151,5 +170,6 @@ module.exports = {
   createNote,
   updateNote,
   getNotesWithoutNotebookByUserId,
-  getNotesByNotebookIdAndUserId
+  getNotesByNotebookIdAndUserId,
+  updateNoteTitle
 };
