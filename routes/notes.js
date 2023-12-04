@@ -118,6 +118,8 @@ router.post('/delete/:id', async (req, res) => {
       // Add notification for when the notes have been deleted
 
       await deleteNoteByNoteId(noteId);
+      // res.json({success: true, message: "Note successfully deleted"})
+
       res.redirect('/notebooks'); // Redirect back to the notes page after deletion
     } catch (error) {
       console.error('Error deleting note:', error);

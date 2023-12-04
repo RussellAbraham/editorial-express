@@ -29,6 +29,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Example route for notebook details
+router.get('/catalogue/notebook/:id', async (req, res) => {
+  const notebookId = req.params.id;
+  // Fetch notebook details and associated notes
+  // Render a template with notebook details and associated notes
+});
+
+// Example route for note details
+router.get('/catalogue/note/:id', async (req, res) => {
+  const noteId = req.params.id;
+  // Fetch note details
+  // Render a template with note details
+});
+
+
 // Route for handling the form submission to create a new notebook
 router.post('/newNotebook', async (req, res) => {
   const { title } = req.body;
@@ -46,19 +61,7 @@ router.post('/newNotebook', async (req, res) => {
   }
 });
 
-// Example route for notebook details
-router.get('/catalogue/notebook/:id', async (req, res) => {
-  const notebookId = req.params.id;
-  // Fetch notebook details and associated notes
-  // Render a template with notebook details and associated notes
-});
 
-// Example route for note details
-router.get('/catalogue/note/:id', async (req, res) => {
-  const noteId = req.params.id;
-  // Fetch note details
-  // Render a template with note details
-});
 
 
 module.exports = router;

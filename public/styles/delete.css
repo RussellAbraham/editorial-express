@@ -1,0 +1,11 @@
+.list-group-item span {
+    transition: 0.2s linear;
+    opacity: 0;
+    width: 0;
+}
+
+.list-group-item:hover span {
+    opacity: 1.0;
+    width: 50px;
+}
+
