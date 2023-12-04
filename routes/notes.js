@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
 const { getUserById } = require('../db/queries/users');
-const { getNotesByNotebookId, getNotesWithoutNotebookByUserId, getNotes, getNoteById, deleteNoteByNoteId, createNote, updateNote } = require('../db/queries/notes');
+const { getNotesByNotebookId, getNotesWithoutNotebookByUserId, getNotes, getNoteById, deleteNoteByNoteId, createNote, updateNote, updateNoteTitle } = require('../db/queries/notes');
 const { getNotebooksByUserId } = require('../db/queries/notebooks');
 const router = express.Router();
 
@@ -74,6 +74,7 @@ router.get('/:id', async (req, res) => {
       notebooks,
       notesWithoutNotebook
     }
+    console.log(templateVars)
     res.locals.title = 'Editor';
     // Render the editor view with the note content
     res.render('editor', templateVars);
@@ -83,7 +84,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST route to handle the update
+// POST route to handle the update the note body
 router.post('/updateNote', async (req, res) => {
   console.log("Updating notes");
 
@@ -103,6 +104,22 @@ router.post('/updateNote', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error updating note' });
   }
 });
+
+// POST route to handle the update the note title
+router.post('/updateNoteTitle', async (req, res) => {
+  try {
+    const { noteId, updatedTitle } = req.body;
+    // Call your function to update the note in the database
+    await updateNoteTitle(noteId, updatedTitle);
+    console.log(updatedTitle, noteId)
+    // Respond with a success message or any other data as needed
+    res.json({ success: true, message: 'Note Title updated successfully' });
+  } catch (error) {
+    console.error('Error updating note:', error);
+    res.status(500).json({ success: false, message: 'Error updating note' });
+  }
+});
+
 
 // New route to handle note deletion using POST
 router.post('/delete/:id', async (req, res) => {
