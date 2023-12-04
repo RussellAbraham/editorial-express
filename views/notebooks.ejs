@@ -62,15 +62,15 @@
 
 
 
-  <div class="container">
+  <div class="container" id="container">
 
     <section id="flash" class="mt-3"></section>
 
-    <ul class="list-group">
+    <ul class="list-group" id="list-group1">
 
       <% for (const notebook of notebooks) { %>
-        <li class="list-group-item">
-          <span class="delete-icon" onclick="deleteItem('<%= notebook.id %>')">
+        <li class="list-group-item" id = "<%= notebook.id %>">
+          <span class="delete-icon">
             <i class="fa fa-trash"></i>
           </span>
           <img src="/icons/folderIcon32px.png" alt="Folder Icon" class="mr-2">
@@ -81,8 +81,8 @@
         <% } %>
 
           <% for (const note of notesWithoutNotebook) { %>
-            <li class="list-group-item">
-              <span class="delete-icon" onclick="deleteItem('<%= note.id %>')">
+            <li class="list-group-item" id = "<%= note.id %>">
+              <span class="delete-icon" >
                 <i class="fa fa-trash"></i>
               </span>
               <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
