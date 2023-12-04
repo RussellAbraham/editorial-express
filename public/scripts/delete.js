@@ -3,20 +3,24 @@ $(document).ready(function () {
   $("#list-group1").on("click", "span", function (event) {
     console.log($(this).parent())
     const listId = $(this).parent()[0].id
+    const listItem = $(this).parent()
     console.log(listId)
 
 
-    $(this).parent().fadeOut(500,function(){
-    	$(this).remove();
+    $(this).parent().fadeOut(500, function () {
+      $(this).remove();
     });
+
+    const isNotebook = listItem.hasClass("notebook-item")
 
     // Send the updatedBody to the server for database update
     $.ajax({
-      url: `/notes/delete/${listId}`,
+      url: isNotebook ? `/notebook/delete/${listId}` : `/notes/delete/${listId}`,
       method: 'POST',
       contentType: 'application/json',
       success: function (data) {
         console.log('Success:', data);
+        flash('Deleted your item', 'danger', document.getElementById('flash'));
         // Handle success, e.g., show a success message
 
       },

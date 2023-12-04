@@ -1,5 +1,5 @@
 const express = require('express');
-const { getNotebooksByUserId, createNewNotebook } = require('../db/queries/notebooks');
+const { getNotebooksByUserId, createNewNotebook, deleteNotebookById } = require('../db/queries/notebooks');
 const { getNotesWithoutNotebookByUserId, getNotesByNotebookIdAndUserId } = require('../db/queries/notes');
 const router = express.Router();
 
@@ -50,6 +50,27 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     console.error('Error retrieving notes for notebook:', error);
     res.status(500).send('Error retrieving notes for notebook');
+  }
+});
+
+
+// delete notebooks and notes
+// New route to handle note deletion using POST
+router.post('/delete/:id', async (req, res) => {
+  const notebookId = req.params.id;
+  const userId = req.cookies["user_id"];
+
+  if (!userId) {
+    res.status(500).send('User currently not logged in!')
+  } else {
+    try {
+      await deleteNotebookById(notebookId);
+      // res.redirect('/notebooks'); // Redirect back to the notes page after deletion
+      res.json({success: true, message: "Notebook successfully deleted"})
+    } catch (error) {
+      console.error('Error deleting note:', error);
+      res.status(500).send('Error deleting note');
+    }
   }
 });
 

@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../db/connection');
 const { getNotesByNotebookId, getNotesWithoutNotebookByUserId } = require('../db/queries/notes');
-const { getNotebooksByUserId, createNewNotebook, deleteNotebookById } = require('../db/queries/notebooks');
+const { getNotebooksByUserId, createNewNotebook } = require('../db/queries/notebooks');
 
 router.get('/', async (req, res) => {
   const userId = req.cookies['user_id'];
@@ -61,24 +61,7 @@ router.post('/newNotebook', async (req, res) => {
   }
 });
 
-// delete notebooks and notes
-// New route to handle note deletion using POST
-router.post('/delete/:id', async (req, res) => {
-  const notebookId = req.params.id;
-  const userId = req.cookies["user_id"];
 
-  if (!userId) {
-    res.status(500).send('User currently not logged in!')
-  } else {
-    try {
-      await deleteNotebookById(notebookId);
-      res.redirect('/notebooks'); // Redirect back to the notes page after deletion
-    } catch (error) {
-      console.error('Error deleting note:', error);
-      res.status(500).send('Error deleting note');
-    }
-  }
-});
 
 
 module.exports = router;

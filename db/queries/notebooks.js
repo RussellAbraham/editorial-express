@@ -46,7 +46,7 @@ const getNotesByNotebookId = async (notebookId) => {
 // TODO: Delete Notebooks and notes belonging 
 const deleteNotebookById = async function (notebookId) {
   try {
-    const result = await db.none('DELETE FROM notebooks WHERE id = $1', [notebookId]);
+    const result = await db.query('DELETE FROM notebooks WHERE id = $1', [notebookId]);
     console.log('Notebook deleted successfully');
     return result;
   } catch (error) {
