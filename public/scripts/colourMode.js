@@ -5,7 +5,7 @@
     link.href = '/styles/darkmode.css';
     link.rel = 'stylesheet';
     link.id = 'darkmodeStyle';
-    document.querySelector('head').appendChild(link);
+    document.head.appendChild(link);
   };
   const removeDarkTheme = () => {
     document.querySelector('#darkmodeStyle').remove();
