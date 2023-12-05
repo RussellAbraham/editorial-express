@@ -38,7 +38,7 @@ const registerRoutes = require('./routes/register');
 const notesRoutes = require('./routes/notes');
 const notebookRoutes = require('./routes/notebook'); // Import the notebook routes
 const notebooksRoutes = require('./routes/notebooks'); // Import the notebooks routes
-
+const commandRoutes = require('./routes/commands'); // jQuery terminal route
 
 // Mount all resource routes
 app.use('/login', loginRoutes);
