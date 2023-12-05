@@ -24,7 +24,7 @@ $(document).ready(function () {
         }),
         success: function (data) {
           console.log('Success:', data);
-          flash('updated title', 'success', document.getElementById('flash'));
+          flash('updated title 😎', 'success', document.getElementById('flash'));
         },
         error: function (error) {
           console.error('Error:', error);

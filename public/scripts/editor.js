@@ -29,6 +29,7 @@ $(document).ready(function() {
             }),
             success: function (data) {
               console.log('Success:', data);
+              flash('updated your note 😁', 'success', document.getElementById('flash'));
             },
             error: function (error) {
               console.error('Error:', error);
