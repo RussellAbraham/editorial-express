@@ -75,6 +75,9 @@
         </div>
         <div class="modal-body">
           <div id="searchForm">
+            <section id="flashForm">
+              <div id ="searchMessage"></div>
+            </section>
             <div class="mb-3">
               <label for="searchInput" class="form-label">What are you looking for?</label>
               <input type="text" class="form-control" id="searchInput" oninput="searchFunction()" name="title" aria-describedby="searchHelp">
@@ -82,7 +85,7 @@
             </div>
           </div>
           <div id="searchList">
-            <div id ="searchMessage"></div>
+
             <div class="mt-1">
               <ul id="searchList" class="list-group list-group-flush">
                 <% for (const notebook of notebooks) { %>
@@ -95,7 +98,7 @@
                 <% }%>
               </ul>
               <ul id="searchList" class="list-group list-group-flush">
-                <% for (const note of notesWithoutNotebook) { %>
+                <% for (const note of allNotes) { %>
                   <li class="list-group-item">
                     <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
                       <a href="/notes/<%= note.id %>">
