@@ -16,6 +16,7 @@ const searchFunction  = () => {
       li[i].style.display = "none";
       currentCount++;
     }
+
     console.log(currentCount)
   }
   if (currentCount === li.length) {
@@ -25,6 +26,7 @@ const searchFunction  = () => {
       '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
       '</div>'
     ].join('');
+    // flash('Nothing here...', 'danger', document.getElementById('flashForm'));
   }
 };
 

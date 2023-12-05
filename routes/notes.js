@@ -52,12 +52,12 @@ router.get('/:id', async (req, res) => {
   const noteId = req.params.id;
   try {
     const note = await getNoteById(noteId);
-    const userNote = await getNotes(userId);
+    const allNotes = await getNotes(userId);
     const notebooks = await getNotebooksByUserId(userId);
     const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     const templateVars = {
       note,
-      userNote,
+      allNotes,
       notebooks,
       notesWithoutNotebook
     }
