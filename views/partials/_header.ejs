@@ -9,6 +9,7 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.37.2/css/jquery.terminal.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="/styles/main.css">
   <link rel="stylesheet" href="/styles/delete.css">
   <title><%= title %></title>
@@ -30,6 +31,8 @@
           <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNoteModal">New Note</a>
           <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newNotebookModal">New Notebook</a>
           <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="printDoc();">Print</button>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/logout">Exit</a>
         </div>
       </div>
@@ -40,7 +43,12 @@
           Edit
         </button>
         <div class="dropdown-menu" aria-labelledby="editDropDown">
+          <button class="dropdown-item" onclick="editor.execute('undo');">Undo</button>
+          <button class="dropdown-item" onclick="editor.execute('redo');">Redo</button>
           <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="editor.execute('bold');">Bold</button>
+          <button class="dropdown-item" onclick="editor.execute('italic');">Italic</button>
+          <button class="dropdown-item" onclick="editor.execute('underline');">Underline</button>
         </div>
       </div>
 
