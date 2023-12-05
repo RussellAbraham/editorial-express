@@ -1,6 +1,7 @@
 // In your notes.js route file or a new route file
 const express = require('express');
 const router = express.Router();
+const { getUserById } = require('../db/queries/users');
 const { getNotesByNotebookId, getNotesWithoutNotebookByUserId, getNotes } = require('../db/queries/notes');
 const { getNotebooksByUserId, createNewNotebook } = require('../db/queries/notebooks');
 
@@ -12,10 +13,12 @@ router.get('/', async (req, res) => {
   }
 
   try {
+    const loggedInUser = await getUserById(userId);
     const notebooks = await getNotebooksByUserId(userId);
     const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     const allNotes = await getNotes(userId);
     const templateVars = {
+      loggedInUser,
       allNotes,
       notebooks,
       notesWithoutNotebook,
