@@ -67,7 +67,7 @@
 
   <!-- Search Modal -->
   <div class="modal fade" id="searchNoteModal" tabindex="-1" aria-labelledby="searchNoteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable max-vh-75">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="searchNoteModalLabel">Search Result</h1>
@@ -96,8 +96,6 @@
                       </a>
                   </li>
                 <% }%>
-              </ul>
-              <ul id="searchList" class="list-group list-group-flush">
                 <% for (const note of allNotes) { %>
                   <li class="list-group-item">
                     <img src="/icons/fileIcon32px.png" alt="File Icon" class="mr-2">
