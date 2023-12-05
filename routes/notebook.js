@@ -1,4 +1,5 @@
 const express = require('express');
+const { getUserById } = require('../db/queries/users');
 const { getNotebooksByUserId, createNewNotebook, deleteNotebookById, getNotebookByNotebookId, updateNotebookTitle } = require('../db/queries/notebooks');
 const { getNotesWithoutNotebookByUserId, getNotesByNotebookIdAndUserId, getNotes } = require('../db/queries/notes');
 const router = express.Router();
@@ -33,6 +34,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     // Fetch the notes for the specific notebook and user
+    const loggedInUser = await getUserById(userId);
     const allNotes = await getNotes(userId);
     const notesForNotebook = await getNotesByNotebookIdAndUserId(notebookId, userId);
     const notebooks = await getNotebooksByUserId(userId);
@@ -41,6 +43,7 @@ router.get("/:id", async (req, res) => {
     console.log(notesForNotebook)
     const userNote = notesForNotebook;
     const templateVars = {
+      loggedInUser,
       allNotes,
       notesForNotebook,
       notebookId,

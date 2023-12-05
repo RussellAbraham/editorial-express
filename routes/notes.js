@@ -51,17 +51,18 @@ router.get('/:id', async (req, res) => {
   }
   const noteId = req.params.id;
   try {
+    const loggedInUser = await getUserById(userId);
     const note = await getNoteById(noteId);
     const allNotes = await getNotes(userId);
     const notebooks = await getNotebooksByUserId(userId);
     const notesWithoutNotebook = await getNotesWithoutNotebookByUserId(userId);
     const templateVars = {
+      loggedInUser,
       note,
       allNotes,
       notebooks,
       notesWithoutNotebook
     }
-    console.log(templateVars)
     res.locals.title = 'Editor';
     // Render the editor view with the note content
     res.render('editor', templateVars);
