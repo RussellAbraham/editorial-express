@@ -47,7 +47,7 @@ app.use('/register', registerRoutes);
 app.use('/notes', notesRoutes);
 app.use('/notebook', notebookRoutes); // Use the notebook routes in the notes routes
 app.use('/notebooks', notebooksRoutes); // Use the notebooks routes in the notes routes
-
+app.use('/commands', commandRoutes);
 
 // Home page
 app.get('/', (req, res) => {
