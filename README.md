@@ -67,17 +67,21 @@ Editorial Express would not be possible without a strong team of [contributors](
 #### [Russell Ley](https://github.com/RussellAbraham) - Developer
 
 <img align="left" width="40" height="40" src="https://avatars.githubusercontent.com/u/35252806?v=4">
-  Russell is an aspiring full stack developer and data analyst from [Lighthous Labs](https://github.com/lighthouse-labs) 
+
+Russell is an aspiring full stack developer and data analyst from [Lighthouse Labs](https://github.com/lighthouse-labs).
 
 #### [Jubril Bello](https://github.com/jbelloRepo) - Developer
 
 <img align="left" width="40" height="40" src="https://avatars.githubusercontent.com/u/93074451?v=4">
-  Jubril is an aspiring full stack developer from [Lighthous Labs](https://github.com/lighthouse-labs) 
+
+Jubril is an aspiring full stack developer from [Lighthouse Labs](https://github.com/lighthouse-labs).
 
 #### [Bo Yu](https://github.com/BYYu31) - Developer
 
 <img align="left" width="40" height="40" src="https://avatars.githubusercontent.com/u/126260653?v=4">
-  Bo is an aspiring full stack developer from [Lighthous Labs](https://github.com/lighthouse-labs) 
+
+Bo is an aspiring full stack developer from [Lighthouse Labs](https://github.com/lighthouse-labs).
+
 
 ## Dependencies
 
