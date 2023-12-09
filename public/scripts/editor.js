@@ -29,7 +29,7 @@ $(document).ready(function() {
             }),
             success: function (data) {
               console.log('Success:', data);
-              flash('Successfully saved your note!😁', 'success', document.getElementById('flashMessage'));
+              flash('Successfully saved your note! 😁', 'success', document.getElementById('flashMessage'));
             },
             error: function (error) {
               console.error('Error:', error);
