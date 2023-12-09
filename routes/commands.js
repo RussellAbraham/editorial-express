@@ -3,7 +3,7 @@ const db = require('../db/connection');
 const router = express.Router();
 
 // Handle commands from the terminal
-router.post('/command', async (req, res) => {
+router.post('/', async (req, res) => {
   const { command } = req.body;
   const splitString = command.split(' ').slice(1).join(' ');
   try {

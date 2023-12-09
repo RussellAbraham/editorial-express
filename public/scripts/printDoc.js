@@ -13,3 +13,18 @@ const printDoc = () => {
 
   printWindow.document.close();
 };
+const demoDoc = () => {
+  const printWindow = window.open("about:blank", "demoWindow");
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+  <html>
+    <head>
+      <title>Demo</title>
+      <link href="https://assets.codepen.io/1674766/markdown.css" rel="stylesheet">
+    </head>
+  <body>
+    ${editor.getData()}
+  </body>
+  </html>`);
+  printWindow.document.close();
+};

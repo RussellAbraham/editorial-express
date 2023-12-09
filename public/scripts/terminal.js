@@ -10,7 +10,7 @@ $(document).ready(function () {
         // Handle command to post to the server
         try {
           const response = await $.ajax({
-            url: '/notes/command',
+            url: '/commands',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ command }),

@@ -105,7 +105,8 @@ router.post('/delete/:id', async (req, res) => {
   } else {
     try {
       await deleteNoteByNoteId(noteId);
-      res.redirect('/notebooks'); // Redirect back to the notes page after deletion
+      // send message back to DOM when post request is made using AJAX
+      res.json({success: "Successfully delelted note😤"}); // Redirect back to the notes page after deletion
     } catch (error) {
       console.error('Error deleting note:', error);
       res.status(500).send('Error deleting note');
