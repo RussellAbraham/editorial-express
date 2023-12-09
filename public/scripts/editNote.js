@@ -13,7 +13,7 @@ $(document).ready(function () {
 
       const noteId = $(this).attr('id');
       const isNotebook = $(this).hasClass("notebook-item");
-
+      flash('Successfully udpate item 😁', 'success',document.getElementById('flashMessage'))
       $.ajax({
         url: isNotebook ? '/notebook/updateNotebookTitle' : '/notes/updateNoteTitle',
         method: 'POST',
@@ -24,7 +24,7 @@ $(document).ready(function () {
         }),
         success: function (data) {
           console.log('Success:', data);
-          flash('updated title', 'success', document.getElementById('flash'));
+          flash('Updated title 😎', 'success', document.getElementById('flash'));
         },
         error: function (error) {
           console.error('Error:', error);

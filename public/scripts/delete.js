@@ -17,7 +17,7 @@ $(document).ready(function () {
       contentType: 'application/json',
       success: function (data) {
         console.log('Success:', data);
-        flash('Deleted your item', 'danger', document.getElementById('flash'));
+        flash('Deleted your item 😤', 'danger', document.getElementById('flash'));
       },
       error: function (error) {
         console.error('Error:', error);
